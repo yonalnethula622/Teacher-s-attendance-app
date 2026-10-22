@@ -11,31 +11,63 @@
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icon.png">
 <title>STG Staff Attendance</title>
+
 <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+
 <style>
-:root{--teal:#176d73;--green:#239b91;--gold:#e4ad3e;--ink:#173b3d;--muted:#647779;--bg:#f3f7f7;--line:#dce8e7}
+:root{
+  --teal:#176d73;
+  --green:#239b91;
+  --gold:#e4ad3e;
+  --ink:#173b3d;
+  --muted:#647779;
+  --bg:#f3f7f7;
+  --line:#dce8e7;
+}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+body{
+  margin:0;background:var(--bg);color:var(--ink);
+  font:15px/1.45 system-ui,-apple-system,Segoe UI,Roboto,sans-serif
+}
 button,input,select{font:inherit}
-button{cursor:pointer;border:0;border-radius:12px;padding:12px 15px;background:var(--teal);color:white;font-weight:650}
-button.secondary{background:#e6f1f0;color:var(--teal);border:1px solid #cfe2e0}
+button{
+  cursor:pointer;border:0;border-radius:12px;padding:12px 15px;
+  background:var(--teal);color:white;font-weight:650
+}
+button.secondary{
+  background:#e6f1f0;color:var(--teal);border:1px solid #cfe2e0
+}
 button.danger{background:#a83232}
 button:disabled{opacity:.5;cursor:not-allowed}
-header{background:linear-gradient(135deg,#145b61,var(--teal));color:white;padding:18px 16px 20px}
-.brand{display:flex;align-items:center;gap:12px;max-width:1100px;margin:auto}
-.brand img{width:54px;height:54px;object-fit:cover;border-radius:13px;background:white}
+header{
+  background:linear-gradient(135deg,#145b61,var(--teal));
+  color:white;padding:18px 16px 20px
+}
+.brand{
+  display:flex;align-items:center;gap:12px;
+  max-width:1100px;margin:auto
+}
+.brand img{
+  width:54px;height:54px;object-fit:cover;
+  border-radius:13px;background:white
+}
 .brand h1{font-size:18px;margin:0}
 .brand p{font-size:12px;margin:3px 0 0;color:#d7eeee}
 main{max-width:1100px;margin:20px auto;padding:0 14px 40px}
-.panel{background:white;border:1px solid var(--line);border-radius:18px;padding:18px;margin-bottom:16px;box-shadow:0 4px 15px #173b3d08}
+.panel{
+  background:white;border:1px solid var(--line);border-radius:18px;
+  padding:18px;margin-bottom:16px;box-shadow:0 4px 15px #173b3d08
+}
 .panel h2{font-size:18px;margin:0 0 12px}
 .sub{color:var(--muted);font-size:13px}
 .hidden{display:none!important}
 .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
 .field{display:flex;flex-direction:column;gap:5px;margin-bottom:12px}
 .field label{font-size:13px;font-weight:700}
-.field input,.field select{width:100%;padding:11px 12px;border:1px solid #cddcdb;border-radius:10px;background:white;color:var(--ink)}
+.field input,.field select{
+  width:100%;padding:11px 12px;border:1px solid #cddcdb;
+  border-radius:10px;background:white;color:var(--ink)
+}
 .actions{display:flex;flex-wrap:wrap;gap:8px}
 .tabs{display:flex;gap:8px;overflow:auto;margin-bottom:14px}
 .tabs button{white-space:nowrap}
@@ -44,11 +76,20 @@ main{max-width:1100px;margin:20px auto;padding:0 14px 40px}
 .stat{padding:13px;border-radius:14px;background:#eaf4f3}
 .stat b{display:block;font-size:23px}
 .stat span{font-size:12px;color:var(--muted)}
-.notice{padding:12px 14px;border-radius:12px;background:#eaf4f3;margin:12px 0;white-space:pre-wrap}
+.notice{
+  padding:12px 14px;border-radius:12px;background:#eaf4f3;
+  margin:12px 0;white-space:pre-wrap
+}
 .notice.error{background:#fff0ee;color:#8e2924}
 .notice.ok{background:#e7f7eb;color:#176437}
-.person{display:flex;gap:12px;align-items:center;border:1px solid var(--line);padding:12px;border-radius:13px;margin:8px 0}
-.person img{width:58px;height:58px;border-radius:12px;object-fit:cover;background:#eef4f4}
+.person{
+  display:flex;gap:12px;align-items:center;border:1px solid var(--line);
+  padding:12px;border-radius:13px;margin:8px 0
+}
+.person img{
+  width:58px;height:58px;border-radius:12px;
+  object-fit:cover;background:#eef4f4
+}
 .person .grow{flex:1;min-width:0}
 .person strong{display:block;overflow-wrap:anywhere}
 .person small{color:var(--muted)}
@@ -61,527 +102,997 @@ th{background:#f2f7f7}
 .bigresult{text-align:center;padding:20px;border-radius:16px;background:#eaf4f3;margin-top:14px}
 .bigresult h3{margin:4px 0}
 .footer{text-align:center;color:var(--muted);font-size:12px;padding:15px}
-@media(max-width:620px){.grid{grid-template-columns:1fr}.panel{padding:14px}.person{align-items:flex-start}.person .actions button{padding:8px 10px;font-size:12px}}
+@media(max-width:620px){
+  .grid{grid-template-columns:1fr}
+  .panel{padding:14px}
+  .person{align-items:flex-start}
+  .person .actions button{padding:8px 10px;font-size:12px}
+}
 </style>
 </head>
+
 <body>
 <header>
-<div class="brand">
-<img src="icon.png" alt="STG icon">
-<div><h1>STG Staff Attendance</h1><p>ST. THERESA'S GEMS INTERNATIONAL PRESCHOOL</p></div>
-</div>
+  <div class="brand">
+    <img src="icon.png" alt="STG icon">
+    <div>
+      <h1>STG Staff Attendance</h1>
+      <p>ST. THERESA'S GEMS INTERNATIONAL PRESCHOOL</p>
+    </div>
+  </div>
 </header>
+
 <main>
-<section id="setupNotice" class="panel hidden">
-<h2>Firebase setup required</h2>
-<p>Configure Firebase before using the app.</p>
-</section>
+  <section id="setupNotice" class="panel hidden">
+    <h2>Firebase setup required</h2>
+    <p>Configure Firebase before using the app.</p>
+  </section>
 
-<section id="loginView" class="panel">
-<h2>Welcome</h2>
-<p class="sub">Choose how you want to use the attendance system.</p>
-<div class="grid">
-<div class="panel" style="margin:0">
-<h2>Device Login</h2>
-<p class="sub">Entrance QR scanner.</p>
-<button id="deviceLoginBtn" style="width:100%">Open QR Scanner</button>
-</div>
-<div class="panel" style="margin:0">
-<h2>Technical Admin</h2>
-<div class="field"><label for="adminEmail">Admin email</label><input id="adminEmail" type="email" autocomplete="username"></div>
-<div class="field"><label for="adminPassword">Password</label><input id="adminPassword" type="password" autocomplete="current-password"></div>
-<button id="adminLoginBtn" style="width:100%">Technical Admin Login</button>
-</div>
-</div>
-<div id="loginMsg" class="notice hidden"></div>
-</section>
+  <section id="loginView" class="panel">
+    <h2>Welcome</h2>
+    <p class="sub">Choose how you want to use the attendance system.</p>
 
-<section id="deviceView" class="hidden">
-<div class="panel scanbox">
-<div class="actions" style="justify-content:space-between;align-items:center">
-<h2>Scan Staff QR Code</h2><button class="secondary" id="deviceLogoutBtn">Exit</button>
-</div>
-<p class="sub">QR code must contain the staff ID, e.g. STG-TEA-0001.</p>
-<div id="qr-reader"></div>
-<div class="actions" style="margin-top:12px">
-<button id="startScanBtn">Start Camera</button>
-<button class="secondary" id="stopScanBtn">Stop Camera</button>
-</div>
-<div class="field" style="margin-top:14px"><label for="manualId">Enter staff ID manually</label><input id="manualId" placeholder="STG-TEA-0001"></div>
-<button id="manualScanBtn" style="width:100%">Submit Staff ID</button>
-<div id="scanMsg" class="notice hidden"></div>
-<div id="scanResult" class="bigresult hidden"></div>
-</div>
-</section>
+    <div class="grid">
+      <div class="panel" style="margin:0">
+        <h2>Device Login</h2>
+        <p class="sub">Sign in to use the entrance QR scanner.</p>
 
-<section id="adminView" class="hidden">
-<div class="actions" style="justify-content:space-between;align-items:center;margin-bottom:12px">
-<div><h2 style="margin:0">Technical Admin Dashboard</h2><div id="adminSignedIn" class="sub"></div></div>
-<button class="secondary" id="adminLogoutBtn">Log out</button>
-</div>
-<div class="statgrid">
-<div class="stat"><b id="teacherCount">0</b><span>Teachers</span></div>
-<div class="stat"><b id="workerCount">0</b><span>Workers</span></div>
-<div class="stat"><b id="todayCount">0</b><span>Today's records</span></div>
-</div>
-<div class="tabs">
-<button class="active" data-tab="staffTab">Staff</button>
-<button class="secondary" data-tab="addTab">Add Staff</button>
-<button class="secondary" data-tab="attendanceTab">Attendance</button>
-</div>
+        <div class="field">
+          <label for="scannerEmail">Scanner email</label>
+          <input id="scannerEmail" type="email"
+                 value="yonalnethula622@gmail.com"
+                 autocomplete="username">
+        </div>
 
-<section id="staffTab" class="panel">
-<h2>Registered Staff</h2>
-<div class="grid">
-<div class="field"><label for="staffSearch">Search</label><input id="staffSearch" placeholder="Name or STG ID"></div>
-<div class="field"><label for="staffFilter">Category</label><select id="staffFilter"><option value="all">All staff</option><option value="teacher">Teachers</option><option value="worker">Workers</option></select></div>
-</div>
-<div id="staffList"></div>
-</section>
+        <div class="field">
+          <label for="scannerPassword">Scanner password</label>
+          <input id="scannerPassword" type="password"
+                 autocomplete="current-password">
+        </div>
 
-<section id="addTab" class="panel hidden">
-<h2>Add Teacher or Worker</h2>
-<div class="field"><label for="staffType">Staff category</label><select id="staffType"><option value="teacher">Teacher</option><option value="worker">Worker</option></select></div>
-<form id="staffForm">
-<div class="grid">
-<div class="field"><label for="staffName">Full name *</label><input id="staffName" required></div>
-<div class="field"><label for="staffPhone">Phone number *</label><input id="staffPhone" type="tel" required></div>
-<div class="field"><label for="staffEmail">Email</label><input id="staffEmail" type="email"></div>
-<div class="field"><label for="staffAddress">Address *</label><input id="staffAddress" required></div>
-<div id="workerTypeWrap" class="field hidden"><label for="workerType">Worker type *</label><input id="workerType" placeholder="Cleaner, helper, security"></div>
-</div>
-<button type="submit">Save Staff</button>
-</form>
-<div id="addMsg" class="notice hidden"></div>
-</section>
+        <button id="deviceLoginBtn" style="width:100%">Scanner Login</button>
+      </div>
 
-<section id="attendanceTab" class="panel hidden">
-<h2>Attendance Records</h2>
-<div class="grid">
-<div class="field"><label for="fromDate">From date</label><input type="date" id="fromDate"></div>
-<div class="field"><label for="toDate">To date</label><input type="date" id="toDate"></div>
-</div>
-<div class="actions">
-<button id="loadAttendanceBtn">Load Records</button>
-<button class="secondary" id="exportAllBtn">Export CSV</button>
-</div>
-<div id="attendanceList" class="tablewrap" style="margin-top:14px"></div>
-</section>
-</section>
-<div class="footer">ST. THERESA'S GEMS INTERNATIONAL PRESCHOOL · Staff Attendance</div>
+      <div class="panel" style="margin:0">
+        <h2>Technical Admin</h2>
+
+        <div class="field">
+          <label for="adminEmail">Admin email</label>
+          <input id="adminEmail" type="email"
+                 value="st.theresapreschool2010@gmail.com"
+                 autocomplete="username">
+        </div>
+
+        <div class="field">
+          <label for="adminPassword">Password</label>
+          <input id="adminPassword" type="password"
+                 autocomplete="current-password">
+        </div>
+
+        <button id="adminLoginBtn" style="width:100%">Technical Admin Login</button>
+      </div>
+    </div>
+
+    <div id="loginMsg" class="notice hidden" role="status"></div>
+  </section>
+
+  <section id="deviceView" class="hidden">
+    <div class="panel scanbox">
+      <div class="actions" style="justify-content:space-between;align-items:center">
+        <h2>Scan Staff QR Code</h2>
+        <button class="secondary" id="deviceLogoutBtn">Exit</button>
+      </div>
+
+      <p class="sub">QR code must contain the staff ID, e.g. STG-TEA-0001.</p>
+
+      <div id="qr-reader"></div>
+
+      <div class="actions" style="margin-top:12px">
+        <button id="startScanBtn">Start Camera</button>
+        <button class="secondary" id="stopScanBtn" disabled>Stop Camera</button>
+      </div>
+
+      <div class="field" style="margin-top:14px">
+        <label for="manualId">Enter staff ID manually</label>
+        <input id="manualId" placeholder="STG-TEA-0001">
+      </div>
+
+      <button id="manualScanBtn" style="width:100%">Submit Staff ID</button>
+
+      <div id="scanMsg" class="notice hidden" role="status"></div>
+      <div id="scanResult" class="bigresult hidden" aria-live="polite"></div>
+    </div>
+  </section>
+
+  <section id="adminView" class="hidden">
+    <div class="actions" style="justify-content:space-between;align-items:center;margin-bottom:12px">
+      <div>
+        <h2 style="margin:0">Technical Admin Dashboard</h2>
+        <div id="adminSignedIn" class="sub"></div>
+      </div>
+      <button class="secondary" id="adminLogoutBtn">Log out</button>
+    </div>
+
+    <div class="statgrid">
+      <div class="stat"><b id="teacherCount">0</b><span>Teachers</span></div>
+      <div class="stat"><b id="workerCount">0</b><span>Workers</span></div>
+      <div class="stat"><b id="todayCount">0</b><span>Today's records</span></div>
+    </div>
+
+    <div class="tabs">
+      <button class="active" data-tab="staffTab">Staff</button>
+      <button class="secondary" data-tab="addTab">Add Staff</button>
+      <button class="secondary" data-tab="attendanceTab">Attendance</button>
+    </div>
+
+    <section id="staffTab" class="panel">
+      <h2>Registered Staff</h2>
+
+      <div class="grid">
+        <div class="field">
+          <label for="staffSearch">Search</label>
+          <input id="staffSearch" placeholder="Name or STG ID">
+        </div>
+
+        <div class="field">
+          <label for="staffFilter">Category</label>
+          <select id="staffFilter">
+            <option value="all">All staff</option>
+            <option value="teacher">Teachers</option>
+            <option value="worker">Workers</option>
+          </select>
+        </div>
+      </div>
+
+      <div id="staffList"></div>
+    </section>
+
+    <section id="addTab" class="panel hidden">
+      <h2>Add Teacher or Worker</h2>
+
+      <div class="field">
+        <label for="staffType">Staff category</label>
+        <select id="staffType">
+          <option value="teacher">Teacher</option>
+          <option value="worker">Worker</option>
+        </select>
+      </div>
+
+      <form id="staffForm">
+        <div class="grid">
+          <div class="field">
+            <label for="staffName">Full name *</label>
+            <input id="staffName" required>
+          </div>
+
+          <div class="field">
+            <label for="staffPhone">Phone number *</label>
+            <input id="staffPhone" type="tel" required>
+          </div>
+
+          <div class="field">
+            <label for="staffEmail">Email</label>
+            <input id="staffEmail" type="email">
+          </div>
+
+          <div class="field">
+            <label for="staffAddress">Address *</label>
+            <input id="staffAddress" required>
+          </div>
+
+          <div id="workerTypeWrap" class="field hidden">
+            <label for="workerType">Worker type *</label>
+            <input id="workerType" placeholder="Cleaner, helper, security">
+          </div>
+        </div>
+
+        <button id="saveStaffBtn" type="submit">Save Staff</button>
+      </form>
+
+      <div id="addMsg" class="notice hidden" role="status"></div>
+    </section>
+
+    <section id="attendanceTab" class="panel hidden">
+      <h2>Attendance Records</h2>
+
+      <div class="grid">
+        <div class="field">
+          <label for="fromDate">From date</label>
+          <input type="date" id="fromDate">
+        </div>
+
+        <div class="field">
+          <label for="toDate">To date</label>
+          <input type="date" id="toDate">
+        </div>
+      </div>
+
+      <div class="actions">
+        <button id="loadAttendanceBtn">Load Records</button>
+        <button class="secondary" id="exportAllBtn">Export CSV</button>
+      </div>
+
+      <div id="attendanceList" class="tablewrap" style="margin-top:14px"></div>
+    </section>
+  </section>
+
+  <div class="footer">ST. THERESA'S GEMS INTERNATIONAL PRESCHOOL · Staff Attendance</div>
 </main>
 
 <script type="module">
-import {initializeApp} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
 import {
- getAuth,signInWithEmailAndPassword,signInAnonymously,signOut,onAuthStateChanged
+  getAuth,
+  signInWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
 import {
- getFirestore,collection,doc,getDoc,getDocs,setDoc,deleteDoc,
- query,orderBy,where,runTransaction,serverTimestamp
+  getFirestore,
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  setDoc,
+  deleteDoc,
+  query,
+  orderBy,
+  where,
+  runTransaction,
+  serverTimestamp
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-/*
-  SECURITY WARNING:
-  This starter performs attendance writes from the browser.
-  Do not use it for real attendance until writes are moved to
-  a trusted Cloud Function and Firestore rules are secured.
-*/
-
-
 const firebaseConfig = {
- apiKey: "AIzaSyBAlfsbosw2bUSXBEykGVpzScgIBgVp_Yw",
- authDomain: "teacher-s-attendance-6393e.firebaseapp.com",
- projectId: "teacher-s-attendance-6393e",
- messagingSenderId: "79181074281",
- appId: "1:79181074281:web:caef78f3f93b7893ca37f8"
+  apiKey: "AIzaSyBAlfsbosw2bUSXBEykGVpzScgIBgVp_Yw",
+  authDomain: "teacher-s-attendance-6393e.firebaseapp.com",
+  projectId: "teacher-s-attendance-6393e",
+  messagingSenderId: "79181074281",
+  appId: "1:79181074281:web:caef78f3f93b7893ca37f8"
 };
 
-/* Change this if your real Firebase admin account uses another email. */
 const ADMIN_EMAIL = "st.theresapreschool2010@gmail.com".trim();
+const SCANNER_EMAIL = "yonalnethula622@gmail.com".trim();
 
 const CONFIGURED =
- !!firebaseConfig.apiKey &&
- !!firebaseConfig.authDomain &&
- !!firebaseConfig.projectId &&
- !!firebaseConfig.appId &&
- !Object.values(firebaseConfig).some(v=>String(v).startsWith("YOUR_")) &&
- !!ADMIN_EMAIL &&
- !ADMIN_EMAIL.includes("YOUR_ADMIN_EMAIL");
+  !!firebaseConfig.apiKey &&
+  !!firebaseConfig.authDomain &&
+  !!firebaseConfig.projectId &&
+  !!firebaseConfig.appId &&
+  !Object.values(firebaseConfig).some(v => String(v).startsWith("YOUR_")) &&
+  !!ADMIN_EMAIL &&
+  !!SCANNER_EMAIL;
 
 const $ = id => document.getElementById(id);
-const views=["loginView","deviceView","adminView"];
+const views = ["loginView", "deviceView", "adminView"];
 
-let app=null,auth=null,db=null,currentUser=null,currentMode="";
-let scanner=null,cachedStaff=[],lastRows=[];
+let app = null;
+let auth = null;
+let db = null;
+let currentUser = null;
+let currentMode = "";
+let scanner = null;
+let cachedStaff = [];
+let lastRows = [];
+let processingScan = false;
 
-function showMsg(id,text,error=false,ok=false){
- const el=$(id);
- el.textContent=text;
- el.className="notice"+(error?" error":ok?" ok":"");
- el.classList.remove("hidden");
-}
-function clearMsg(id){$(id).classList.add("hidden")}
-function showView(id){views.forEach(v=>$(v).classList.toggle("hidden",v!==id))}
-function normalizeId(v){return String(v||"").trim().toUpperCase().replace(/\s+/g,"")}
-function sriDate(){
- return new Intl.DateTimeFormat("en-CA",{timeZone:"Asia/Colombo",year:"numeric",month:"2-digit",day:"2-digit"}).format(new Date());
-}
-function sriTime(){
- return new Intl.DateTimeFormat("en-US",{timeZone:"Asia/Colombo",hour:"2-digit",minute:"2-digit",second:"2-digit",hour12:true}).format(new Date());
-}
-function isAdmin(user=currentUser){
- return !!user&&!user.isAnonymous&&!!user.email&&user.email.toLowerCase()===ADMIN_EMAIL.toLowerCase();
-}
-function friendly(e){
- if(e.code==="auth/invalid-credential"||e.code==="auth/wrong-password")return "Incorrect email or password.";
- if(e.code==="auth/operation-not-allowed")return "Enable this sign-in method in Firebase Authentication.";
- if(e.code==="auth/admin-restricted-operation")return "Anonymous sign-in is disabled or restricted in Firebase Authentication.";
- if(e.code==="permission-denied"||e.code==="firestore/permission-denied")return "Firebase denied this action. Check your Firestore rules.";
- return e.message||"Something went wrong.";
-}
-async function requireConfig(){
- if(!CONFIGURED)throw new Error("Firebase configuration is incomplete.");
- if(!auth||!db)throw new Error("Firebase failed to initialize. Check the configuration and browser console.");
+function showMsg(id, text, error = false, ok = false) {
+  const el = $(id);
+  el.textContent = text;
+  el.className = "notice" + (error ? " error" : ok ? " ok" : "");
+  el.classList.remove("hidden");
 }
 
-try{
- if(CONFIGURED){
-  app=initializeApp(firebaseConfig);
-  auth=getAuth(app);
-  db=getFirestore(app);
- }else{
-  $("setupNotice").classList.remove("hidden");
- }
-}catch(e){
- showMsg("loginMsg","Firebase initialization error: "+e.message,true);
+function clearMsg(id) {
+  $(id).classList.add("hidden");
 }
 
-$("deviceLoginBtn").onclick=async()=>{
- try{
-  await requireConfig();
-  await signInAnonymously(auth);
- }catch(e){showMsg("loginMsg",friendly(e),true)}
-};
+function showView(id) {
+  views.forEach(v => $(v).classList.toggle("hidden", v !== id));
+}
 
+function normalizeId(value) {
+  return String(value || "").trim().toUpperCase().replace(/\s+/g, "");
+}
 
-$("adminLoginBtn").onclick = async () => {
-  const email = $("adminEmail").value.trim();
-  const password = $("adminPassword").value;
+function sriDate() {
+  return new Intl.DateTimeFormat("en-CA", {
+    timeZone: "Asia/Colombo",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit"
+  }).format(new Date());
+}
 
-  showMsg("loginMsg", "Signing in...");
+function sriTime() {
+  return new Intl.DateTimeFormat("en-US", {
+    timeZone: "Asia/Colombo",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hour12: true
+  }).format(new Date());
+}
+
+function isAdmin(user = currentUser) {
+  return !!user &&
+    !user.isAnonymous &&
+    !!user.email &&
+    user.email.toLowerCase() === ADMIN_EMAIL.toLowerCase();
+}
+
+function isScanner(user = currentUser) {
+  return !!user &&
+    !user.isAnonymous &&
+    !!user.email &&
+    user.email.toLowerCase() === SCANNER_EMAIL.toLowerCase();
+}
+
+function friendly(e) {
+  if (e.code === "auth/invalid-credential" ||
+      e.code === "auth/wrong-password" ||
+      e.code === "auth/invalid-login-credentials") {
+    return "Incorrect email or password. Check your Firebase Authentication account.";
+  }
+
+  if (e.code === "auth/user-not-found") {
+    return "This account does not exist in Firebase Authentication. Add the scanner email under Authentication → Users.";
+  }
+
+  if (e.code === "auth/operation-not-allowed") {
+    return "Enable Email/Password under Firebase Authentication → Sign-in method.";
+  }
+
+  if (e.code === "auth/too-many-requests") {
+    return "Too many unsuccessful attempts. Wait a while before trying again.";
+  }
+
+  if (e.code === "permission-denied" ||
+      e.code === "firestore/permission-denied") {
+    return "Firebase denied this action. Check that the published Firestore rules allow this signed-in account to access this collection.";
+  }
+
+  return e.message || "Something went wrong.";
+}
+
+async function requireConfig() {
+  if (!CONFIGURED) {
+    throw new Error("Firebase configuration is incomplete.");
+  }
+
+  if (!auth || !db) {
+    throw new Error("Firebase failed to initialize. Check the configuration and browser console.");
+  }
+}
+
+try {
+  if (CONFIGURED) {
+    app = initializeApp(firebaseConfig);
+    auth = getAuth(app);
+    db = getFirestore(app);
+  } else {
+    $("setupNotice").classList.remove("hidden");
+  }
+} catch (e) {
+  showMsg("loginMsg", "Firebase initialization error: " + e.message, true);
+}
+
+/* SCANNER LOGIN */
+
+$("deviceLoginBtn").onclick = async () => {
+  const email = $("scannerEmail").value.trim();
+  const password = $("scannerPassword").value;
 
   try {
     await requireConfig();
 
     if (!email || !password) {
-      throw new Error("Please enter both your email and password.");
+      throw new Error("Enter your scanner email and password.");
     }
 
-    if (email.toLowerCase() !== ADMIN_EMAIL.trim().toLowerCase()) {
+    if (email.toLowerCase() !== SCANNER_EMAIL.toLowerCase()) {
+      throw new Error("Use the authorized scanner email.");
+    }
+
+    $("deviceLoginBtn").disabled = true;
+    showMsg("loginMsg", "Signing in to the scanner...");
+
+    await signInWithEmailAndPassword(auth, email, password);
+    clearMsg("loginMsg");
+  } catch (e) {
+    showMsg(
+      "loginMsg",
+      `${e.code ? e.code + ": " : ""}${friendly(e)}`,
+      true
+    );
+  } finally {
+    $("deviceLoginBtn").disabled = false;
+  }
+};
+
+/* TECHNICAL ADMIN LOGIN */
+
+$("adminLoginBtn").onclick = async () => {
+  const email = $("adminEmail").value.trim();
+  const password = $("adminPassword").value;
+
+  try {
+    await requireConfig();
+
+    if (!email || !password) {
+      throw new Error("Enter both the Technical Admin email and password.");
+    }
+
+    if (email.toLowerCase() !== ADMIN_EMAIL.toLowerCase()) {
       throw new Error("This email is not the configured Technical Admin.");
     }
 
+    $("adminLoginBtn").disabled = true;
+    showMsg("loginMsg", "Signing in to Technical Admin...");
+
     await signInWithEmailAndPassword(auth, email, password);
+    clearMsg("loginMsg");
   } catch (e) {
-    showMsg("loginMsg", `${e.code ? e.code + ": " : ""}${friendly(e)}`, true);
+    showMsg(
+      "loginMsg",
+      `${e.code ? e.code + ": " : ""}${friendly(e)}`,
+      true
+    );
+  } finally {
+    $("adminLoginBtn").disabled = false;
   }
 };
 
-$("deviceLogoutBtn").onclick=async()=>{
- await stopScanner();
- if(auth?.currentUser)await signOut(auth);
- currentMode="";
- showView("loginView");
-};
-$("adminLogoutBtn").onclick=async()=>{
- if(auth?.currentUser)await signOut(auth);
- currentMode="";
- showView("loginView");
+/* LOGOUT */
+
+$("deviceLogoutBtn").onclick = async () => {
+  await stopScanner();
+
+  try {
+    if (auth?.currentUser) {
+      await signOut(auth);
+    }
+    currentMode = "";
+    showView("loginView");
+  } catch (e) {
+    showMsg("scanMsg", friendly(e), true);
+  }
 };
 
-if(auth){
- onAuthStateChanged(auth,async user=>{
-  currentUser=user;
-  if(!user){showView("loginView");return}
-  if(user.isAnonymous){
-   currentMode="device";
-   showView("deviceView");
-   return;
+$("adminLogoutBtn").onclick = async () => {
+  try {
+    if (auth?.currentUser) {
+      await signOut(auth);
+    }
+    currentMode = "";
+    showView("loginView");
+  } catch (e) {
+    alert(friendly(e));
   }
-  if(isAdmin(user)){
-   currentMode="admin";
-   $("adminSignedIn").textContent=user.email;
-   showView("adminView");
-   try{await refreshStaff();await refreshStats()}
-   catch(e){showMsg("loginMsg",friendly(e),true)}
-  }else{
-   await signOut(auth);
-   showView("loginView");
-   showMsg("loginMsg","This account is not authorized as Technical Admin.",true);
-  }
- });
+};
+
+/* RESTORE SESSION AND SELECT THE CORRECT DASHBOARD */
+
+if (auth) {
+  onAuthStateChanged(auth, async user => {
+    currentUser = user;
+
+    if (!user) {
+      currentMode = "";
+      showView("loginView");
+      return;
+    }
+
+    if (isScanner(user)) {
+      currentMode = "device";
+      showView("deviceView");
+      return;
+    }
+
+    if (isAdmin(user)) {
+      currentMode = "admin";
+      $("adminSignedIn").textContent = user.email;
+      showView("adminView");
+
+      try {
+        await refreshStaff();
+        await refreshStats();
+      } catch (e) {
+        showMsg("loginMsg", friendly(e), true);
+      }
+      return;
+    }
+
+    await signOut(auth);
+    currentMode = "";
+    showView("loginView");
+    showMsg("loginMsg", "This account is not authorized as Scanner or Technical Admin.", true);
+  });
 }
 
-$("staffType").onchange=()=>{
- const teacher=$("staffType").value==="teacher";
- $("workerTypeWrap").classList.toggle("hidden",teacher);
- $("workerType").required=!teacher;
+/* STAFF FORM */
+
+$("staffType").onchange = () => {
+  const teacher = $("staffType").value === "teacher";
+  $("workerTypeWrap").classList.toggle("hidden", teacher);
+  $("workerType").required = !teacher;
 };
+
 $("staffType").dispatchEvent(new Event("change"));
 
-document.querySelectorAll("[data-tab]").forEach(b=>{
- b.onclick=()=>{
-  document.querySelectorAll("[data-tab]").forEach(x=>{
-   x.classList.toggle("active",x===b);
-   x.classList.toggle("secondary",x!==b);
-  });
-  ["staffTab","addTab","attendanceTab"].forEach(id=>{
-   $(id).classList.toggle("hidden",id!==b.dataset.tab);
-  });
- };
+/* ADMIN TABS */
+
+document.querySelectorAll("[data-tab]").forEach(button => {
+  button.onclick = () => {
+    document.querySelectorAll("[data-tab]").forEach(item => {
+      item.classList.toggle("active", item === button);
+      item.classList.toggle("secondary", item !== button);
+    });
+
+    ["staffTab", "addTab", "attendanceTab"].forEach(id => {
+      $(id).classList.toggle("hidden", id !== button.dataset.tab);
+    });
+  };
 });
 
-$("staffForm").onsubmit=async e=>{
- e.preventDefault();
- try{
-  if(!isAdmin())throw new Error("Technical Admin access is required.");
-  const type=$("staffType").value;
-  const name=$("staffName").value.trim();
-  const phone=$("staffPhone").value.trim();
-  const email=$("staffEmail").value.trim();
-  const address=$("staffAddress").value.trim();
-  const workerType=$("workerType").value.trim();
+/* ADD TEACHER OR WORKER */
 
-  if(!name||!phone||!address)throw new Error("Complete all required fields.");
-  if(type==="worker"&&!workerType)throw new Error("Enter the worker type.");
+$("staffForm").onsubmit = async e => {
+  e.preventDefault();
 
-  const result=await runTransaction(db,async tx=>{
-   const counterRef=doc(db,"settings","staffCounters");
-   const counterSnap=await tx.get(counterRef);
-   const field=type==="teacher"?"teacher":"worker";
-   const next=(counterSnap.exists()?Number(counterSnap.data()[field]||0):0)+1;
-   const id=`STG-${type==="teacher"?"TEA":"WOR"}-${String(next).padStart(4,"0")}`;
-   const staffRef=doc(db,"staff",id);
-   const dirRef=doc(db,"staffDirectory",id);
+  if (!isAdmin()) {
+    showMsg("addMsg", "Technical Admin access is required.", true);
+    return;
+  }
 
-   tx.set(staffRef,{
-    id,type,name,phone,email,address,
-    workerType:type==="worker"?workerType:"",
-    photoURL:"",
-    createdAt:serverTimestamp(),
-    createdBy:currentUser.email
-   });
-   tx.set(dirRef,{id,type,name});
-   tx.set(counterRef,{[field]:next},{merge:true});
-   return id;
-  });
+  const saveButton = $("saveStaffBtn");
+  saveButton.disabled = true;
 
-  showMsg("addMsg",`Staff saved successfully.\nStaff ID: ${result}\nCreate a QR code containing only this ID.`,false,true);
-  $("staffForm").reset();
-  $("staffType").dispatchEvent(new Event("change"));
-  await refreshStaff();
-  await refreshStats();
- }catch(err){showMsg("addMsg",friendly(err),true)}
-};
+  try {
+    const type = $("staffType").value;
+    const name = $("staffName").value.trim();
+    const phone = $("staffPhone").value.trim();
+    const email = $("staffEmail").value.trim();
+    const address = $("staffAddress").value.trim();
+    const workerType = $("workerType").value.trim();
 
-async function refreshStaff(){
- if(!isAdmin())return;
- const snap=await getDocs(query(collection(db,"staff"),orderBy("id")));
- cachedStaff=snap.docs.map(d=>d.data());
- renderStaff();
-}
-function renderStaff(){
- const term=$("staffSearch").value.toLowerCase();
- const filter=$("staffFilter").value;
- const arr=cachedStaff.filter(s=>
-  (filter==="all"||s.type===filter)&&
-  [s.id,s.name,s.phone].some(v=>String(v||"").toLowerCase().includes(term))
- );
- $("staffList").replaceChildren();
- if(!arr.length){
-  $("staffList").textContent="No matching staff found.";
-  return;
- }
- arr.forEach(s=>{
-  const div=document.createElement("div");
-  div.className="person";
-  const img=document.createElement("img");
-  img.src="icon.png";
-  img.alt="";
-  const grow=document.createElement("div");
-  grow.className="grow";
-  const strong=document.createElement("strong");
-  strong.textContent=s.name;
-  const small=document.createElement("small");
-  small.textContent=`${s.id} · ${s.type==="teacher"?"Teacher":s.workerType||"Worker"}`;
-  const actions=document.createElement("div");
-  actions.className="actions";
-  const del=document.createElement("button");
-  del.className="danger";
-  del.textContent="Delete staff";
-  del.onclick=()=>deleteStaff(s);
-  actions.append(del);
-  grow.append(strong,small,actions);
-  div.append(img,grow);
-  $("staffList").append(div);
- });
-}
-$("staffSearch").oninput=renderStaff;
-$("staffFilter").onchange=renderStaff;
+    if (!name || !phone || !address) {
+      throw new Error("Complete all required fields.");
+    }
 
-async function refreshStats(){
- if(!isAdmin())return;
- $("teacherCount").textContent=cachedStaff.filter(s=>s.type==="teacher").length;
- $("workerCount").textContent=cachedStaff.filter(s=>s.type==="worker").length;
- try{
-  const snap=await getDocs(query(collection(db,"attendance"),where("date","==",sriDate())));
-  $("todayCount").textContent=snap.size;
- }catch(e){$("todayCount").textContent="—"}
-}
-async function deleteStaff(s){
- if(!isAdmin())return;
- if(!confirm(`Delete ${s.name} (${s.id}) from the staff directory? Attendance records will remain.`))return;
- try{
-  await deleteDoc(doc(db,"staff",s.id));
-  await deleteDoc(doc(db,"staffDirectory",s.id));
-  cachedStaff=cachedStaff.filter(x=>x.id!==s.id);
-  renderStaff();
-  await refreshStats();
- }catch(e){alert(friendly(e))}
-}
+    if (type === "worker" && !workerType) {
+      throw new Error("Enter the worker type.");
+    }
 
-async function startScanner(){
- if(!window.Html5Qrcode){showMsg("scanMsg","QR scanner library did not load.",true);return}
- try{
-  if(!scanner)scanner=new Html5Qrcode("qr-reader");
-  await scanner.start(
-   {facingMode:"environment"},
-   {fps:10,qrbox:{width:230,height:230}},
-   decoded=>{stopScanner();processScan(decoded)},
-   ()=>{}
-  );
-  $("startScanBtn").disabled=true;
-  $("stopScanBtn").disabled=false;
- }catch(e){
-  showMsg("scanMsg","Camera could not start. Allow camera access and use the HTTPS GitHub Pages address. You can enter the ID manually.",true);
- }
-}
-async function stopScanner(){
- try{if(scanner&&scanner.isScanning)await scanner.stop()}catch(e){}
- $("startScanBtn").disabled=false;
- $("stopScanBtn").disabled=true;
-}
-$("startScanBtn").onclick=startScanner;
-$("stopScanBtn").onclick=stopScanner;
-$("manualScanBtn").onclick=()=>processScan($("manualId").value);
+    const result = await runTransaction(db, async tx => {
+      const counterRef = doc(db, "settings", "staffCounters");
+      const counterSnap = await tx.get(counterRef);
+      const field = type === "teacher" ? "teacher" : "worker";
+      const next =
+        (counterSnap.exists() ? Number(counterSnap.data()[field] || 0) : 0) + 1;
 
-async function processScan(raw){
- clearMsg("scanMsg");
- $("scanResult").classList.add("hidden");
- try{
-  if(!currentUser||!currentUser.isAnonymous)throw new Error("Open Device Login first.");
-  const id=normalizeId(raw);
-  if(!/^STG-(TEA|WOR)-\d{4,}$/.test(id))throw new Error("Invalid staff ID. Example: STG-TEA-0001.");
-  const dirSnap=await getDoc(doc(db,"staffDirectory",id));
-  if(!dirSnap.exists())throw new Error("Staff ID is not registered.");
-  const person=dirSnap.data();
-  const date=sriDate();
-  const time=sriTime();
-  const attRef=doc(db,"attendance",`${id}_${date}`);
+      const id = `STG-${type === "teacher" ? "TEA" : "WOR"}-${String(next).padStart(4, "0")}`;
+      const staffRef = doc(db, "staff", id);
+      const dirRef = doc(db, "staffDirectory", id);
 
-  const result=await runTransaction(db,async tx=>{
-   const snap=await tx.get(attRef);
-   if(!snap.exists()){
-    tx.set(attRef,{
-     staffId:id,name:person.name,type:person.type,date,
-     arrivalTime:time,arrivalAt:serverTimestamp(),
-     departureTime:"",departureAt:null,updatedAt:serverTimestamp()
+      tx.set(staffRef, {
+        id,
+        type,
+        name,
+        phone,
+        email,
+        address,
+        workerType: type === "worker" ? workerType : "",
+        photoURL: "",
+        createdAt: serverTimestamp(),
+        createdBy: currentUser.email
+      });
+
+      tx.set(dirRef, { id, type, name });
+      tx.set(counterRef, { [field]: next }, { merge: true });
+
+      return id;
     });
-    return "arrival";
-   }
-   const a=snap.data();
-   if(a.departureTime)return "already-left";
-   tx.update(attRef,{
-    departureTime:time,departureAt:serverTimestamp(),updatedAt:serverTimestamp()
-   });
-   return "departure";
-  });
 
-  const messages={
-   arrival:`${person.name} has arrived successfully.\nArrival: ${time}\nDate: ${date}`,
-   departure:`${person.name}'s departure has been saved.\nDeparture: ${time}\nDate: ${date}`,
-   "already-left":`${person.name} has already left today. No new record was created.`
-  };
-  $("scanResult").replaceChildren();
-  const h=document.createElement("h3");
-  h.textContent=result==="arrival"?"Arrival saved":result==="departure"?"Departure saved":"Already left";
-  const p=document.createElement("p");
-  p.textContent=messages[result];
-  $("scanResult").append(h,p);
-  $("scanResult").classList.remove("hidden");
-  $("manualId").value="";
- }catch(e){showMsg("scanMsg",friendly(e),true)}
-}
+    showMsg(
+      "addMsg",
+      `Staff saved successfully.\nStaff ID: ${result}\nCreate a QR code containing only this ID.`,
+      false,
+      true
+    );
 
-$("loadAttendanceBtn").onclick=loadAttendance;
-async function loadAttendance(){
- if(!isAdmin())return;
- try{
-  const snap=await getDocs(query(collection(db,"attendance"),orderBy("date","desc")));
-  lastRows=snap.docs.map(d=>({docId:d.id,...d.data()})).filter(r=>
-   (!$("fromDate").value||r.date>=$("fromDate").value)&&
-   (!$("toDate").value||r.date<=$("toDate").value)
-  );
-  renderAttendance();
- }catch(e){showMsg("loginMsg",friendly(e),true)}
-}
-function renderAttendance(){
- const root=$("attendanceList");
- root.replaceChildren();
- if(!lastRows.length){root.textContent="No attendance records found for this date range.";return}
- const table=document.createElement("table");
- table.innerHTML="<thead><tr><th>Staff ID</th><th>Name</th><th>Date</th><th>Arrival</th><th>Departure</th><th>Action</th></tr></thead>";
- const body=document.createElement("tbody");
- lastRows.forEach(r=>{
-  const tr=document.createElement("tr");
-  [r.staffId,r.name,r.date,r.arrivalTime||"—",r.departureTime||"Not recorded"].forEach(v=>{
-   const td=document.createElement("td");td.textContent=v;tr.append(td);
-  });
-  const td=document.createElement("td");
-  const b=document.createElement("button");
-  b.className="danger";b.textContent="Delete";
-  b.onclick=()=>deleteAttendance(r);
-  td.append(b);tr.append(td);body.append(tr);
- });
- table.append(body);root.append(table);
-}
-async function deleteAttendance(r){
- if(!isAdmin())return;
- if(!confirm(`Delete attendance for ${r.name} on ${r.date}?`))return;
- try{
-  await deleteDoc(doc(db,"attendance",r.docId));
-  lastRows=lastRows.filter(x=>x.docId!==r.docId);
-  renderAttendance();
-  await refreshStats();
- }catch(e){alert(friendly(e))}
-}
-$("exportAllBtn").onclick=()=>{
- if(!lastRows.length)return alert("Load attendance records first.");
- const csv=[["Staff ID","Name","Category","Date","Arrival","Departure"],
- ...lastRows.map(r=>[r.staffId,r.name,r.type,r.date,r.arrivalTime||"",r.departureTime||""])]
- .map(row=>row.map(v=>`"${String(v??"").replace(/"/g,'""')}"`).join(",")).join("\r\n");
- downloadBlob(csv,"stg-attendance.csv","text/csv;charset=utf-8");
+    $("staffForm").reset();
+    $("staffType").dispatchEvent(new Event("change"));
+
+    await refreshStaff();
+    await refreshStats();
+  } catch (err) {
+    showMsg("addMsg", friendly(err), true);
+  } finally {
+    saveButton.disabled = false;
+  }
 };
-function downloadBlob(text,name,type){
- const a=document.createElement("a");
- const url=URL.createObjectURL(new Blob([text],{type}));
- a.href=url;a.download=name;a.click();
- setTimeout(()=>URL.revokeObjectURL(url),1000);
+
+/* LOAD AND DISPLAY STAFF */
+
+async function refreshStaff() {
+  if (!isAdmin()) return;
+
+  const snap = await getDocs(query(collection(db, "staff"), orderBy("id")));
+  cachedStaff = snap.docs.map(d => d.data());
+  renderStaff();
 }
 
-if("serviceWorker" in navigator){
- window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(()=>{}));
+function renderStaff() {
+  const term = $("staffSearch").value.toLowerCase();
+  const filter = $("staffFilter").value;
+
+  const arr = cachedStaff.filter(s =>
+    (filter === "all" || s.type === filter) &&
+    [s.id, s.name, s.phone].some(v =>
+      String(v || "").toLowerCase().includes(term)
+    )
+  );
+
+  $("staffList").replaceChildren();
+
+  if (!arr.length) {
+    $("staffList").textContent = "No matching staff found.";
+    return;
+  }
+
+  arr.forEach(s => {
+    const div = document.createElement("div");
+    div.className = "person";
+
+    const img = document.createElement("img");
+    img.src = "icon.png";
+    img.alt = "";
+
+    const grow = document.createElement("div");
+    grow.className = "grow";
+
+    const strong = document.createElement("strong");
+    strong.textContent = s.name;
+
+    const small = document.createElement("small");
+    small.textContent =
+      `${s.id} · ${s.type === "teacher" ? "Teacher" : s.workerType || "Worker"}`;
+
+    const actions = document.createElement("div");
+    actions.className = "actions";
+
+    const del = document.createElement("button");
+    del.className = "danger";
+    del.textContent = "Delete staff";
+    del.onclick = () => deleteStaff(s);
+
+    actions.append(del);
+    grow.append(strong, small, actions);
+    div.append(img, grow);
+    $("staffList").append(div);
+  });
+}
+
+$("staffSearch").oninput = renderStaff;
+$("staffFilter").onchange = renderStaff;
+
+/* DASHBOARD COUNTS */
+
+async function refreshStats() {
+  if (!isAdmin()) return;
+
+  $("teacherCount").textContent =
+    cachedStaff.filter(s => s.type === "teacher").length;
+
+  $("workerCount").textContent =
+    cachedStaff.filter(s => s.type === "worker").length;
+
+  try {
+    const snap = await getDocs(
+      query(collection(db, "attendance"), where("date", "==", sriDate()))
+    );
+    $("todayCount").textContent = snap.size;
+  } catch (e) {
+    $("todayCount").textContent = "—";
+  }
+}
+
+/* DELETE STAFF; HISTORICAL ATTENDANCE REMAINS */
+
+async function deleteStaff(s) {
+  if (!isAdmin()) return;
+
+  if (!confirm(`Delete ${s.name} (${s.id}) from the staff directory? Attendance records will remain.`)) {
+    return;
+  }
+
+  try {
+    await deleteDoc(doc(db, "staff", s.id));
+    await deleteDoc(doc(db, "staffDirectory", s.id));
+
+    cachedStaff = cachedStaff.filter(x => x.id !== s.id);
+    renderStaff();
+    await refreshStats();
+  } catch (e) {
+    alert(friendly(e));
+  }
+}
+
+/* QR SCANNER */
+
+async function startScanner() {
+  if (!isScanner()) {
+    showMsg("scanMsg", "Sign in with the authorized scanner account first.", true);
+    return;
+  }
+
+  if (!window.Html5Qrcode) {
+    showMsg("scanMsg", "QR scanner library did not load. Check your internet connection.", true);
+    return;
+  }
+
+  try {
+    if (!scanner) {
+      scanner = new Html5Qrcode("qr-reader");
+    }
+
+    await scanner.start(
+      { facingMode: "environment" },
+      { fps: 10, qrbox: { width: 230, height: 230 } },
+      decoded => {
+        stopScanner();
+        processScan(decoded);
+      },
+      () => {}
+    );
+
+    $("startScanBtn").disabled = true;
+    $("stopScanBtn").disabled = false;
+    clearMsg("scanMsg");
+  } catch (e) {
+    showMsg(
+      "scanMsg",
+      "Camera could not start. Allow camera access and use the HTTPS GitHub Pages address. You can enter the ID manually.",
+      true
+    );
+  }
+}
+
+async function stopScanner() {
+  try {
+    if (scanner && scanner.isScanning) {
+      await scanner.stop();
+    }
+  } catch (e) {
+    // The scanner may already have stopped.
+  }
+
+  $("startScanBtn").disabled = false;
+  $("stopScanBtn").disabled = true;
+}
+
+$("startScanBtn").onclick = startScanner;
+$("stopScanBtn").onclick = stopScanner;
+$("manualScanBtn").onclick = () => processScan($("manualId").value);
+
+/* PROCESS ARRIVAL OR DEPARTURE */
+
+async function processScan(raw) {
+  if (processingScan) return;
+  processingScan = true;
+
+  clearMsg("scanMsg");
+  $("scanResult").classList.add("hidden");
+  $("manualScanBtn").disabled = true;
+
+  try {
+    if (!isScanner()) {
+      throw new Error("Please sign in with the authorized scanner account.");
+    }
+
+    const id = normalizeId(raw);
+
+    if (!/^STG-(TEA|WOR)-\d{4,}$/.test(id)) {
+      throw new Error("Invalid staff ID. Example: STG-TEA-0001.");
+    }
+
+    const dirSnap = await getDoc(doc(db, "staffDirectory", id));
+
+    if (!dirSnap.exists()) {
+      throw new Error("Staff ID is not registered.");
+    }
+
+    const person = dirSnap.data();
+    const date = sriDate();
+    const time = sriTime();
+    const attRef = doc(db, "attendance", `${id}_${date}`);
+
+    const result = await runTransaction(db, async tx => {
+      const snap = await tx.get(attRef);
+
+      if (!snap.exists()) {
+        tx.set(attRef, {
+          staffId: id,
+          name: person.name,
+          type: person.type,
+          date,
+          arrivalTime: time,
+          arrivalAt: serverTimestamp(),
+          departureTime: "",
+          departureAt: null,
+          updatedAt: serverTimestamp()
+        });
+
+        return "arrival";
+      }
+
+      const a = snap.data();
+
+      if (a.departureTime) {
+        return "already-left";
+      }
+
+      tx.update(attRef, {
+        departureTime: time,
+        departureAt: serverTimestamp(),
+        updatedAt: serverTimestamp()
+      });
+
+      return "departure";
+    });
+
+    const messages = {
+      arrival: `${person.name} has arrived successfully.\nArrival: ${time}\nDate: ${date}`,
+      departure: `${person.name}'s departure has been saved.\nDeparture: ${time}\nDate: ${date}`,
+      "already-left": `${person.name} has already left today. No new record was created.`
+    };
+
+    $("scanResult").replaceChildren();
+
+    const h = document.createElement("h3");
+    h.textContent =
+      result === "arrival" ? "Arrival saved" :
+      result === "departure" ? "Departure saved" : "Already left";
+
+    const p = document.createElement("p");
+    p.textContent = messages[result];
+
+    $("scanResult").append(h, p);
+    $("scanResult").classList.remove("hidden");
+    $("manualId").value = "";
+  } catch (e) {
+    showMsg("scanMsg", friendly(e), true);
+  } finally {
+    processingScan = false;
+    $("manualScanBtn").disabled = false;
+  }
+}
+
+/* ATTENDANCE HISTORY */
+
+$("loadAttendanceBtn").onclick = loadAttendance;
+
+async function loadAttendance() {
+  if (!isAdmin()) return;
+
+  try {
+    const snap = await getDocs(
+      query(collection(db, "attendance"), orderBy("date", "desc"))
+    );
+
+    lastRows = snap.docs
+      .map(d => ({ docId: d.id, ...d.data() }))
+      .filter(r =>
+        (!$("fromDate").value || r.date >= $("fromDate").value) &&
+        (!$("toDate").value || r.date <= $("toDate").value)
+      );
+
+    renderAttendance();
+  } catch (e) {
+    showMsg("loginMsg", friendly(e), true);
+  }
+}
+
+function renderAttendance() {
+  const root = $("attendanceList");
+  root.replaceChildren();
+
+  if (!lastRows.length) {
+    root.textContent = "No attendance records found for this date range.";
+    return;
+  }
+
+  const table = document.createElement("table");
+  table.innerHTML =
+    "<thead><tr><th>Staff ID</th><th>Name</th><th>Date</th><th>Arrival</th><th>Departure</th><th>Action</th></tr></thead>";
+
+  const body = document.createElement("tbody");
+
+  lastRows.forEach(r => {
+    const tr = document.createElement("tr");
+
+    [r.staffId, r.name, r.date, r.arrivalTime || "—",
+     r.departureTime || "Not recorded"].forEach(v => {
+      const td = document.createElement("td");
+      td.textContent = v;
+      tr.append(td);
+    });
+
+    const td = document.createElement("td");
+    const b = document.createElement("button");
+
+    b.className = "danger";
+    b.textContent = "Delete";
+    b.onclick = () => deleteAttendance(r);
+
+    td.append(b);
+    tr.append(td);
+    body.append(tr);
+  });
+
+  table.append(body);
+  root.append(table);
+}
+
+async function deleteAttendance(r) {
+  if (!isAdmin()) return;
+
+  if (!confirm(`Delete attendance for ${r.name} on ${r.date}?`)) {
+    return;
+  }
+
+  try {
+    await deleteDoc(doc(db, "attendance", r.docId));
+
+    lastRows = lastRows.filter(x => x.docId !== r.docId);
+    renderAttendance();
+    await refreshStats();
+  } catch (e) {
+    alert(friendly(e));
+  }
+}
+
+/* CSV EXPORT */
+
+$("exportAllBtn").onclick = () => {
+  if (!lastRows.length) {
+    return alert("Load attendance records first.");
+  }
+
+  const csv = [
+    ["Staff ID", "Name", "Category", "Date", "Arrival", "Departure"],
+    ...lastRows.map(r => [
+      r.staffId, r.name, r.type, r.date,
+      r.arrivalTime || "", r.departureTime || ""
+    ])
+  ]
+    .map(row =>
+      row.map(v => `"${String(v ?? "").replace(/"/g, '""')}"`).join(",")
+    )
+    .join("\r\n");
+
+  downloadBlob(csv, "stg-attendance.csv", "text/csv;charset=utf-8");
+};
+
+function downloadBlob(text, name, type) {
+  const a = document.createElement("a");
+  const url = URL.createObjectURL(new Blob([text], { type }));
+
+  a.href = url;
+  a.download = name;
+  a.click();
+
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+/* OPTIONAL SERVICE WORKER */
+
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("./sw.js").catch(() => {});
+  });
 }
 </script>
 </body>
