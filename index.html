@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -14,136 +15,560 @@
 <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
 <style>
 :root{--teal:#176d73;--green:#239b91;--gold:#e4ad3e;--ink:#173b3d;--muted:#647779;--bg:#f3f7f7;--line:#dce8e7}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
-button,input,select,textarea{font:inherit}button{cursor:pointer;border:0;border-radius:12px;padding:12px 15px;background:var(--teal);color:white;font-weight:650}button.secondary{background:#e6f1f0;color:var(--teal);border:1px solid #cfe2e0}button.danger{background:#a83232}button:disabled{opacity:.5;cursor:not-allowed}
-header{background:linear-gradient(135deg,#145b61,var(--teal));color:white;padding:18px 16px 20px;box-shadow:0 3px 12px #123b3d20}
-.brand{display:flex;align-items:center;gap:12px;max-width:1100px;margin:auto}.brand img{width:54px;height:54px;object-fit:cover;border-radius:13px;background:white}.brand h1{font-size:18px;margin:0}.brand p{font-size:12px;margin:3px 0 0;color:#d7eeee}
-main{max-width:1100px;margin:20px auto;padding:0 14px 40px}.panel{background:white;border:1px solid var(--line);border-radius:18px;padding:18px;margin-bottom:16px;box-shadow:0 4px 15px #173b3d08}.panel h2{font-size:18px;margin:0 0 12px}.sub{color:var(--muted);font-size:13px}.hidden{display:none!important}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.field{display:flex;flex-direction:column;gap:5px;margin-bottom:12px}.field label{font-size:13px;font-weight:700}.field input,.field select,.field textarea{width:100%;padding:11px 12px;border:1px solid #cddcdb;border-radius:10px;background:white;color:var(--ink)}.actions{display:flex;flex-wrap:wrap;gap:8px}.tabs{display:flex;gap:8px;overflow:auto;margin-bottom:14px}.tabs button{white-space:nowrap}.tabs button.active{background:var(--gold);color:#2e2b20}.statgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px}.stat{padding:13px;border-radius:14px;background:#eaf4f3}.stat b{display:block;font-size:23px}.stat span{font-size:12px;color:var(--muted)}.notice{padding:12px 14px;border-radius:12px;background:#eaf4f3;margin:12px 0;white-space:pre-wrap}.notice.error{background:#fff0ee;color:#8e2924}.notice.ok{background:#e7f7eb;color:#176437}.person{display:flex;gap:12px;align-items:center;border:1px solid var(--line);padding:12px;border-radius:13px;margin:8px 0}.person img{width:58px;height:58px;border-radius:12px;object-fit:cover;background:#eef4f4}.person .grow{flex:1;min-width:0}.person strong{display:block;overflow-wrap:anywhere}.person small{color:var(--muted)}.person .actions{margin-top:7px}.tablewrap{overflow:auto}table{border-collapse:collapse;width:100%;font-size:13px}th,td{text-align:left;padding:10px;border-bottom:1px solid var(--line);white-space:nowrap}th{background:#f2f7f7}.scanbox{max-width:500px;margin:auto}.bigresult{text-align:center;padding:20px;border-radius:16px;background:#eaf4f3;margin-top:14px}.bigresult h3{margin:4px 0}.photo-preview{width:84px;height:84px;border-radius:14px;object-fit:cover;display:none;margin:5px 0}.footer{text-align:center;color:var(--muted);font-size:12px;padding:15px}
-@media(max-width:620px){.grid{grid-template-columns:1fr}.statgrid{grid-template-columns:repeat(3,1fr)}.panel{padding:14px}.person{align-items:flex-start}.person .actions button{padding:8px 10px;font-size:12px}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+button,input,select{font:inherit}
+button{cursor:pointer;border:0;border-radius:12px;padding:12px 15px;background:var(--teal);color:white;font-weight:650}
+button.secondary{background:#e6f1f0;color:var(--teal);border:1px solid #cfe2e0}
+button.danger{background:#a83232}
+button:disabled{opacity:.5;cursor:not-allowed}
+header{background:linear-gradient(135deg,#145b61,var(--teal));color:white;padding:18px 16px 20px}
+.brand{display:flex;align-items:center;gap:12px;max-width:1100px;margin:auto}
+.brand img{width:54px;height:54px;object-fit:cover;border-radius:13px;background:white}
+.brand h1{font-size:18px;margin:0}
+.brand p{font-size:12px;margin:3px 0 0;color:#d7eeee}
+main{max-width:1100px;margin:20px auto;padding:0 14px 40px}
+.panel{background:white;border:1px solid var(--line);border-radius:18px;padding:18px;margin-bottom:16px;box-shadow:0 4px 15px #173b3d08}
+.panel h2{font-size:18px;margin:0 0 12px}
+.sub{color:var(--muted);font-size:13px}
+.hidden{display:none!important}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.field{display:flex;flex-direction:column;gap:5px;margin-bottom:12px}
+.field label{font-size:13px;font-weight:700}
+.field input,.field select{width:100%;padding:11px 12px;border:1px solid #cddcdb;border-radius:10px;background:white;color:var(--ink)}
+.actions{display:flex;flex-wrap:wrap;gap:8px}
+.tabs{display:flex;gap:8px;overflow:auto;margin-bottom:14px}
+.tabs button{white-space:nowrap}
+.tabs button.active{background:var(--gold);color:#2e2b20}
+.statgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px}
+.stat{padding:13px;border-radius:14px;background:#eaf4f3}
+.stat b{display:block;font-size:23px}
+.stat span{font-size:12px;color:var(--muted)}
+.notice{padding:12px 14px;border-radius:12px;background:#eaf4f3;margin:12px 0;white-space:pre-wrap}
+.notice.error{background:#fff0ee;color:#8e2924}
+.notice.ok{background:#e7f7eb;color:#176437}
+.person{display:flex;gap:12px;align-items:center;border:1px solid var(--line);padding:12px;border-radius:13px;margin:8px 0}
+.person img{width:58px;height:58px;border-radius:12px;object-fit:cover;background:#eef4f4}
+.person .grow{flex:1;min-width:0}
+.person strong{display:block;overflow-wrap:anywhere}
+.person small{color:var(--muted)}
+.person .actions{margin-top:7px}
+.tablewrap{overflow:auto}
+table{border-collapse:collapse;width:100%;font-size:13px}
+th,td{text-align:left;padding:10px;border-bottom:1px solid var(--line);white-space:nowrap}
+th{background:#f2f7f7}
+.scanbox{max-width:500px;margin:auto}
+.bigresult{text-align:center;padding:20px;border-radius:16px;background:#eaf4f3;margin-top:14px}
+.bigresult h3{margin:4px 0}
+.footer{text-align:center;color:var(--muted);font-size:12px;padding:15px}
+@media(max-width:620px){.grid{grid-template-columns:1fr}.panel{padding:14px}.person{align-items:flex-start}.person .actions button{padding:8px 10px;font-size:12px}}
 </style>
 </head>
 <body>
-<header><div class="brand"><img src="icon.png" alt="STG icon"><div><h1>STG Staff Attendance</h1><p>ST. THERESA'S GEMS INTERNATIONAL PRESCHOOL</p></div></div></header>
+<header>
+<div class="brand">
+<img src="icon.png" alt="STG icon">
+<div><h1>STG Staff Attendance</h1><p>ST. THERESA'S GEMS INTERNATIONAL PRESCHOOL</p></div>
+</div>
+</header>
 <main>
-<section id="setupNotice" class="panel hidden"><h2>Firebase setup required</h2><p>This app's layout is ready, but it must be connected to your own Firebase project before sign-in or saving can work.</p><p class="sub">Open index.html and replace the placeholder values in the FIREBASE CONFIG section. Follow README.md before using real staff data.</p></section>
+<section id="setupNotice" class="panel hidden">
+<h2>Firebase setup required</h2>
+<p>Configure Firebase before using the app.</p>
+</section>
+
 <section id="loginView" class="panel">
-<h2>Welcome</h2><p class="sub">Choose how you want to use the attendance system.</p>
+<h2>Welcome</h2>
+<p class="sub">Choose how you want to use the attendance system.</p>
 <div class="grid">
-<div class="panel" style="margin:0"><h2>Device Login</h2><p class="sub">For the entrance scanning device. No staff management access.</p><button id="deviceLoginBtn" style="width:100%">Open QR Scanner</button></div>
-<div class="panel" style="margin:0"><h2>Technical Admin</h2><p class="sub">Manage staff, attendance records and PDF reports.</p>
-<div class="field"><label for="adminEmail">Admin email</label><input id="adminEmail" type="email" autocomplete="username" placeholder="admin@example.com"></div>
-<div class="field"><label for="adminPassword">Password</label><input id="adminPassword" type="password" autocomplete="current-password" placeholder="Password"></div>
+<div class="panel" style="margin:0">
+<h2>Device Login</h2>
+<p class="sub">Entrance QR scanner.</p>
+<button id="deviceLoginBtn" style="width:100%">Open QR Scanner</button>
+</div>
+<div class="panel" style="margin:0">
+<h2>Technical Admin</h2>
+<div class="field"><label for="adminEmail">Admin email</label><input id="adminEmail" type="email" autocomplete="username"></div>
+<div class="field"><label for="adminPassword">Password</label><input id="adminPassword" type="password" autocomplete="current-password"></div>
 <button id="adminLoginBtn" style="width:100%">Technical Admin Login</button>
-</div></div><div id="loginMsg" class="notice hidden"></div>
+</div>
+</div>
+<div id="loginMsg" class="notice hidden"></div>
 </section>
+
 <section id="deviceView" class="hidden">
-<div class="panel scanbox"><div class="actions" style="justify-content:space-between;align-items:center"><h2>Scan Staff QR Code</h2><button class="secondary" id="deviceLogoutBtn">Exit</button></div>
-<p class="sub">Scan the QR code containing the staff ID only, for example STG-TEA-0001.</p>
-<div id="qr-reader"></div><div class="actions" style="margin-top:12px"><button id="startScanBtn">Start Camera</button><button class="secondary" id="stopScanBtn">Stop Camera</button></div>
-<div class="field" style="margin-top:14px"><label for="manualId">Or enter staff ID manually</label><input id="manualId" placeholder="STG-TEA-0001" autocapitalize="characters"></div><button id="manualScanBtn" style="width:100%">Submit Staff ID</button>
-<div id="scanMsg" class="notice hidden"></div><div id="scanResult" class="bigresult hidden"></div></div>
+<div class="panel scanbox">
+<div class="actions" style="justify-content:space-between;align-items:center">
+<h2>Scan Staff QR Code</h2><button class="secondary" id="deviceLogoutBtn">Exit</button>
+</div>
+<p class="sub">QR code must contain the staff ID, e.g. STG-TEA-0001.</p>
+<div id="qr-reader"></div>
+<div class="actions" style="margin-top:12px">
+<button id="startScanBtn">Start Camera</button>
+<button class="secondary" id="stopScanBtn">Stop Camera</button>
+</div>
+<div class="field" style="margin-top:14px"><label for="manualId">Enter staff ID manually</label><input id="manualId" placeholder="STG-TEA-0001"></div>
+<button id="manualScanBtn" style="width:100%">Submit Staff ID</button>
+<div id="scanMsg" class="notice hidden"></div>
+<div id="scanResult" class="bigresult hidden"></div>
+</div>
 </section>
+
 <section id="adminView" class="hidden">
-<div class="actions" style="justify-content:space-between;align-items:center;margin-bottom:12px"><div><h2 style="margin:0">Technical Admin Dashboard</h2><div id="adminSignedIn" class="sub"></div></div><button class="secondary" id="adminLogoutBtn">Log out</button></div>
-<div class="statgrid"><div class="stat"><b id="teacherCount">0</b><span>Teachers</span></div><div class="stat"><b id="workerCount">0</b><span>Workers</span></div><div class="stat"><b id="todayCount">0</b><span>Today's records</span></div></div>
-<div class="tabs"><button class="active" data-tab="staffTab">Staff</button><button class="secondary" data-tab="addTab">Add Staff</button><button class="secondary" data-tab="attendanceTab">Attendance</button></div>
-<section id="staffTab" class="panel"><h2>Registered Staff</h2><div class="grid"><div class="field"><label>Search</label><input id="staffSearch" placeholder="Name or STG ID"></div><div class="field"><label>Category</label><select id="staffFilter"><option value="all">All staff</option><option value="teacher">Teachers</option><option value="worker">Workers</option></select></div></div><div id="staffList"></div></section>
-<section id="addTab" class="panel hidden"><h2>Add Teacher or Worker</h2><div class="field"><label for="staffType">Staff category</label><select id="staffType"><option value="teacher">Add Teacher</option><option value="worker">Add Worker</option></select></div>
-<form id="staffForm"><div class="grid"><div class="field"><label for="staffName">Full name *</label><input id="staffName" required></div><div class="field"><label for="staffPhone">Phone number *</label><input id="staffPhone" type="tel" required></div><div class="field"><label for="staffEmail">Email (if available)</label><input id="staffEmail" type="email"></div><div class="field"><label for="staffAddress">Address *</label><input id="staffAddress" required></div><div id="workerTypeWrap" class="field hidden"><label for="workerType">Worker type *</label><input id="workerType" placeholder="Cleaner, helper, security..."></div><div id="teacherPhotoWrap" class="field"><label for="staffPhoto">Teacher photo *</label><input id="staffPhoto" type="file" accept="image/*" capture="environment"><img id="photoPreview" class="photo-preview" alt="Photo preview"></div></div><button type="submit">Save Staff</button></form><div id="addMsg" class="notice hidden"></div></section>
-<section id="attendanceTab" class="panel hidden"><h2>Attendance Records</h2><div class="grid"><div class="field"><label>From date</label><input type="date" id="fromDate"></div><div class="field"><label>To date</label><input type="date" id="toDate"></div></div><div class="actions"><button id="loadAttendanceBtn">Load Records</button><button class="secondary" id="exportAllBtn">Export CSV</button></div><div id="attendanceList" class="tablewrap" style="margin-top:14px"></div></section>
+<div class="actions" style="justify-content:space-between;align-items:center;margin-bottom:12px">
+<div><h2 style="margin:0">Technical Admin Dashboard</h2><div id="adminSignedIn" class="sub"></div></div>
+<button class="secondary" id="adminLogoutBtn">Log out</button>
+</div>
+<div class="statgrid">
+<div class="stat"><b id="teacherCount">0</b><span>Teachers</span></div>
+<div class="stat"><b id="workerCount">0</b><span>Workers</span></div>
+<div class="stat"><b id="todayCount">0</b><span>Today's records</span></div>
+</div>
+<div class="tabs">
+<button class="active" data-tab="staffTab">Staff</button>
+<button class="secondary" data-tab="addTab">Add Staff</button>
+<button class="secondary" data-tab="attendanceTab">Attendance</button>
+</div>
+
+<section id="staffTab" class="panel">
+<h2>Registered Staff</h2>
+<div class="grid">
+<div class="field"><label for="staffSearch">Search</label><input id="staffSearch" placeholder="Name or STG ID"></div>
+<div class="field"><label for="staffFilter">Category</label><select id="staffFilter"><option value="all">All staff</option><option value="teacher">Teachers</option><option value="worker">Workers</option></select></div>
+</div>
+<div id="staffList"></div>
+</section>
+
+<section id="addTab" class="panel hidden">
+<h2>Add Teacher or Worker</h2>
+<div class="field"><label for="staffType">Staff category</label><select id="staffType"><option value="teacher">Teacher</option><option value="worker">Worker</option></select></div>
+<form id="staffForm">
+<div class="grid">
+<div class="field"><label for="staffName">Full name *</label><input id="staffName" required></div>
+<div class="field"><label for="staffPhone">Phone number *</label><input id="staffPhone" type="tel" required></div>
+<div class="field"><label for="staffEmail">Email</label><input id="staffEmail" type="email"></div>
+<div class="field"><label for="staffAddress">Address *</label><input id="staffAddress" required></div>
+<div id="workerTypeWrap" class="field hidden"><label for="workerType">Worker type *</label><input id="workerType" placeholder="Cleaner, helper, security"></div>
+</div>
+<button type="submit">Save Staff</button>
+</form>
+<div id="addMsg" class="notice hidden"></div>
+</section>
+
+<section id="attendanceTab" class="panel hidden">
+<h2>Attendance Records</h2>
+<div class="grid">
+<div class="field"><label for="fromDate">From date</label><input type="date" id="fromDate"></div>
+<div class="field"><label for="toDate">To date</label><input type="date" id="toDate"></div>
+</div>
+<div class="actions">
+<button id="loadAttendanceBtn">Load Records</button>
+<button class="secondary" id="exportAllBtn">Export CSV</button>
+</div>
+<div id="attendanceList" class="tablewrap" style="margin-top:14px"></div>
+</section>
 </section>
 <div class="footer">ST. THERESA'S GEMS INTERNATIONAL PRESCHOOL · Staff Attendance</div>
 </main>
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword, signInAnonymously, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import { getFirestore, collection, doc, getDoc, getDocs, setDoc, addDoc, updateDoc, deleteDoc, query, orderBy, where, runTransaction, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
 
-/* FIREBASE CONFIG: replace these values with the config from Firebase Console > Project settings > Your apps. */
+<script type="module">
+import {initializeApp} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import {
+ getAuth,signInWithEmailAndPassword,signInAnonymously,signOut,onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import {
+ getFirestore,collection,doc,getDoc,getDocs,setDoc,deleteDoc,
+ query,orderBy,where,runTransaction,serverTimestamp
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+/*
+  SECURITY WARNING:
+  This starter performs attendance writes from the browser.
+  Do not use it for real attendance until writes are moved to
+  a trusted Cloud Function and Firestore rules are secured.
+*/
+
 const firebaseConfig = {
-  apiKey: "AIzaSyBAlfsbosw2bUSXBEykGVpzScgIBgVp_Yw",
-  authDomain: "teacher-s-attendance-6393e.firebaseapp.com",
-  projectId: "teacher-s-attendance-6393e",
-  storageBucket: "teacher-s-attendance-6393e.firebasestorage.app",
-  messagingSenderId: "79181074281",
-  appId: "1:79181074281:web:caef78f3f93b7893ca37f8"
+ apiKey:"AIzaSyBAlfsbosw2bUSXBEykGVpzScgIBgVp_Yw",
+ authDomain:"teacher-s-attendance-6393e.firebaseapp.com",
+ projectId:"teacher-s-attendance-6393e",
+ messagingSenderId:"79181074281",
+ appId:"1:79181074281:web:caef78f3f93b7893ca37f8"
 };
-/* Admin email is also enforced in Firestore rules. Update both places. */
-const ADMIN_EMAIL = "st.theresapreschool2010@gmail.com ";
-const CONFIGURED = !Object.values(firebaseConfig).some(v => String(v).startsWith("YOUR_")) && !ADMIN_EMAIL.startsWith("st.theresapreschool2010@gmail.com");
+
+/* Change this if your real Firebase admin account uses another email. */
+const ADMIN_EMAIL = "st.theresapreschool2010@gmail.com".trim();
+
+const CONFIGURED =
+ !!firebaseConfig.apiKey &&
+ !!firebaseConfig.authDomain &&
+ !!firebaseConfig.projectId &&
+ !!firebaseConfig.appId &&
+ !Object.values(firebaseConfig).some(v=>String(v).startsWith("YOUR_")) &&
+ !!ADMIN_EMAIL &&
+ !ADMIN_EMAIL.includes("YOUR_ADMIN_EMAIL");
+
 const $ = id => document.getElementById(id);
-const views = ["loginView","deviceView","adminView"];
-let app, auth, db, storage, scanner, currentUser=null, currentMode="", cachedStaff=[], lastRows=[], photoData=null;
-if(!CONFIGURED) $("setupNotice").classList.remove("hidden");
-try {
- if(CONFIGURED){ app=initializeApp(firebaseConfig); auth=getAuth(app); db=getFirestore(app); storage=getStorage(app); }
-} catch(e){ showMsg("loginMsg","Firebase configuration error: "+e.message,true); }
-function showMsg(id,text,error=false,ok=false){const el=$(id);el.textContent=text;el.className="notice"+(error?" error":ok?" ok":"");el.classList.remove("hidden")}
+const views=["loginView","deviceView","adminView"];
+
+let app=null,auth=null,db=null,currentUser=null,currentMode="";
+let scanner=null,cachedStaff=[],lastRows=[];
+
+function showMsg(id,text,error=false,ok=false){
+ const el=$(id);
+ el.textContent=text;
+ el.className="notice"+(error?" error":ok?" ok":"");
+ el.classList.remove("hidden");
+}
 function clearMsg(id){$(id).classList.add("hidden")}
 function showView(id){views.forEach(v=>$(v).classList.toggle("hidden",v!==id))}
-function sriDate(){return new Intl.DateTimeFormat("en-CA",{timeZone:"Asia/Colombo",year:"numeric",month:"2-digit",day:"2-digit"}).format(new Date())}
-function sriTime(){return new Intl.DateTimeFormat("en-US",{timeZone:"Asia/Colombo",hour:"2-digit",minute:"2-digit",second:"2-digit",hour12:true}).format(new Date())}
-function sriStamp(){return new Intl.DateTimeFormat("en-GB",{timeZone:"Asia/Colombo",dateStyle:"medium",timeStyle:"medium"}).format(new Date())}
-function normalizeId(v){return v.trim().toUpperCase().replace(/\s+/g,"")}
-function isAdmin(user=currentUser){return !!user && !user.isAnonymous && user.email && user.email.toLowerCase()===ADMIN_EMAIL.toLowerCase()}
-async function requireConfig(){if(!CONFIGURED)throw new Error("Firebase is not configured yet. Follow README.md first.");}
-$("deviceLoginBtn").onclick=async()=>{try{await requireConfig();await signInAnonymously(auth);currentMode="device";showView("deviceView");startScanner()}catch(e){showMsg("loginMsg",e.message,true)}};
-$("adminLoginBtn").onclick=async()=>{try{await requireConfig();const email=$("adminEmail").value.trim();if(email.toLowerCase()!==ADMIN_EMAIL.toLowerCase())throw new Error("This email is not the configured Technical Admin.");await signInWithEmailAndPassword(auth,email,$("adminPassword").value)}catch(e){showMsg("loginMsg",friendly(e),true)}};
-$("deviceLogoutBtn").onclick=async()=>{await stopScanner();if(auth.currentUser)await signOut(auth);currentMode="";showView("loginView")};
-$("adminLogoutBtn").onclick=async()=>{await signOut(auth);currentMode="";showView("loginView")};
-if(auth) onAuthStateChanged(auth, async user=>{
- currentUser=user;
- if(!user){showView("loginView");return}
- if(user.isAnonymous){currentMode="device";showView("deviceView")}
- else if(isAdmin(user)){currentMode="admin";$("adminSignedIn").textContent=user.email;showView("adminView");await refreshStaff();await refreshStats()}
- else {await signOut(auth);showView("loginView");showMsg("loginMsg","This account is not authorized as Technical Admin.",true)}
-});
-$("staffType").onchange=()=>{const teacher=$("staffType").value==="teacher";$("workerTypeWrap").classList.toggle("hidden",teacher);$("teacherPhotoWrap").classList.toggle("hidden",!teacher);$("staffPhoto").required=teacher;$("workerType").required=!teacher};
-$("staffPhoto").onchange=async e=>{const f=e.target.files[0];photoData=null;if(!f){$("photoPreview").style.display="none";return}if(f.size>5*1024*1024){showMsg("addMsg","Please choose a photo under 5 MB.",true);e.target.value="";return}photoData=f;$("photoPreview").src=URL.createObjectURL(f);$("photoPreview").style.display="block"};
-document.querySelectorAll("[data-tab]").forEach(b=>b.onclick=()=>{document.querySelectorAll("[data-tab]").forEach(x=>{x.classList.toggle("active",x===b);x.classList.toggle("secondary",x!==b)});["staffTab","addTab","attendanceTab"].forEach(id=>$(id).classList.toggle("hidden",id!==b.dataset.tab))});
-$("staffForm").onsubmit=async e=>{e.preventDefault();try{
- if(!isAdmin())throw new Error("Technical Admin access is required.");
- const type=$("staffType").value,name=$("staffName").value.trim(),phone=$("staffPhone").value.trim(),email=$("staffEmail").value.trim(),address=$("staffAddress").value.trim(),workerType=$("workerType").value.trim();
- if(type==="teacher"&&!photoData)throw new Error("Please upload the teacher's photo.");
- if(type==="worker"&&!workerType)throw new Error("Please enter the worker type.");
- const result=await runTransaction(db,async tx=>{
-  const counterRef=doc(db,"settings","staffCounters"),counterSnap=await tx.get(counterRef);
-  const field=type==="teacher"?"teacher":"worker",next=(counterSnap.exists()?counterSnap.data()[field]||0:0)+1;
-  const id=`STG-${type==="teacher"?"TEA":"WOR"}-${String(next).padStart(4,"0")}`;
-  const staffRef=doc(db,"staff",id),dirRef=doc(db,"staffDirectory",id);
-  tx.set(staffRef,{id,type,name,phone,email,address,workerType:type==="worker"?workerType:"",photoURL:"",createdAt:serverTimestamp(),createdBy:currentUser.email});
-  tx.set(dirRef,{id,type,name});
-  tx.set(counterRef,{[field]:next},{merge:true});
-  return {id,staffRef};
+function normalizeId(v){return String(v||"").trim().toUpperCase().replace(/\s+/g,"")}
+function sriDate(){
+ return new Intl.DateTimeFormat("en-CA",{timeZone:"Asia/Colombo",year:"numeric",month:"2-digit",day:"2-digit"}).format(new Date());
+}
+function sriTime(){
+ return new Intl.DateTimeFormat("en-US",{timeZone:"Asia/Colombo",hour:"2-digit",minute:"2-digit",second:"2-digit",hour12:true}).format(new Date());
+}
+function isAdmin(user=currentUser){
+ return !!user&&!user.isAnonymous&&!!user.email&&user.email.toLowerCase()===ADMIN_EMAIL.toLowerCase();
+}
+function friendly(e){
+ if(e.code==="auth/invalid-credential"||e.code==="auth/wrong-password")return "Incorrect email or password.";
+ if(e.code==="auth/operation-not-allowed")return "Enable this sign-in method in Firebase Authentication.";
+ if(e.code==="auth/admin-restricted-operation")return "Anonymous sign-in is disabled or restricted in Firebase Authentication.";
+ if(e.code==="permission-denied"||e.code==="firestore/permission-denied")return "Firebase denied this action. Check your Firestore rules.";
+ return e.message||"Something went wrong.";
+}
+async function requireConfig(){
+ if(!CONFIGURED)throw new Error("Firebase configuration is incomplete.");
+ if(!auth||!db)throw new Error("Firebase failed to initialize. Check the configuration and browser console.");
+}
+
+try{
+ if(CONFIGURED){
+  app=initializeApp(firebaseConfig);
+  auth=getAuth(app);
+  db=getFirestore(app);
+ }else{
+  $("setupNotice").classList.remove("hidden");
+ }
+}catch(e){
+ showMsg("loginMsg","Firebase initialization error: "+e.message,true);
+}
+
+$("deviceLoginBtn").onclick=async()=>{
+ try{
+  await requireConfig();
+  await signInAnonymously(auth);
+ }catch(e){showMsg("loginMsg",friendly(e),true)}
+};
+
+$("adminLoginBtn").onclick=async()=>{
+ try{
+  await requireConfig();
+  const email=$("adminEmail").value.trim();
+  if(email.toLowerCase()!==ADMIN_EMAIL.toLowerCase()){
+   throw new Error("This email is not the configured Technical Admin.");
+  }
+  await signInWithEmailAndPassword(auth,email,$("adminPassword").value);
+ }catch(e){showMsg("loginMsg",friendly(e),true)}
+};
+
+$("deviceLogoutBtn").onclick=async()=>{
+ await stopScanner();
+ if(auth?.currentUser)await signOut(auth);
+ currentMode="";
+ showView("loginView");
+};
+$("adminLogoutBtn").onclick=async()=>{
+ if(auth?.currentUser)await signOut(auth);
+ currentMode="";
+ showView("loginView");
+};
+
+if(auth){
+ onAuthStateChanged(auth,async user=>{
+  currentUser=user;
+  if(!user){showView("loginView");return}
+  if(user.isAnonymous){
+   currentMode="device";
+   showView("deviceView");
+   return;
+  }
+  if(isAdmin(user)){
+   currentMode="admin";
+   $("adminSignedIn").textContent=user.email;
+   showView("adminView");
+   try{await refreshStaff();await refreshStats()}
+   catch(e){showMsg("loginMsg",friendly(e),true)}
+  }else{
+   await signOut(auth);
+   showView("loginView");
+   showMsg("loginMsg","This account is not authorized as Technical Admin.",true);
+  }
  });
- let photoURL="";
- if(type==="teacher"&&photoData){const storageRef=ref(storage,`staffPhotos/${result.id}/${Date.now()}_${photoData.name.replace(/[^a-zA-Z0-9._-]/g,"_")}`);await uploadBytes(storageRef,photoData);photoURL=await getDownloadURL(storageRef);await updateDoc(result.staffRef,{photoURL})}
- showMsg("addMsg",`Saved successfully.\nStaff ID: ${result.id}\nName: ${name}\nThe QR code should contain only this ID.`,false,true);
- $("staffForm").reset();photoData=null;$("photoPreview").style.display="none";$("staffType").dispatchEvent(new Event("change"));await refreshStaff();await refreshStats();
- }catch(err){showMsg("addMsg",friendly(err),true)}};
-async function refreshStaff(){if(!isAdmin())return;const snap=await getDocs(query(collection(db,"staff"),orderBy("id")));cachedStaff=snap.docs.map(d=>d.data());renderStaff()}
-function renderStaff(){const term=$("staffSearch").value.toLowerCase(),filter=$("staffFilter").value;const arr=cachedStaff.filter(s=>(filter==="all"||s.type===filter)&&[s.id,s.name,s.phone].some(v=>String(v||"").toLowerCase().includes(term)));$("staffList").innerHTML=arr.length?"":"<p class='sub'>No matching staff found.</p>";arr.forEach(s=>{const div=document.createElement("div");div.className="person";const img=document.createElement("img");img.src=s.photoURL||"icon.png";img.alt="";const grow=document.createElement("div");grow.className="grow";grow.innerHTML=`<strong></strong><small></small><div class="actions"></div>`;grow.querySelector("strong").textContent=s.name;grow.querySelector("small").textContent=`${s.id} · ${s.type==="teacher"?"Teacher":s.workerType||"Worker"}`;const actions=grow.querySelector(".actions");const pdf=document.createElement("button");pdf.className="secondary";pdf.textContent="Print Attendance PDF";pdf.onclick=()=>makePersonPDF(s);actions.append(pdf);const del=document.createElement("button");del.className="danger";del.textContent="Delete staff";del.onclick=()=>deleteStaff(s);actions.append(del);div.append(img,grow);$("staffList").append(div)})}
-$("staffSearch").oninput=renderStaff;$("staffFilter").onchange=renderStaff;
-async function refreshStats(){if(!isAdmin())return;$("teacherCount").textContent=cachedStaff.filter(s=>s.type==="teacher").length;$("workerCount").textContent=cachedStaff.filter(s=>s.type==="worker").length;try{const snap=await getDocs(query(collection(db,"attendance"),where("date","==",sriDate())));$("todayCount").textContent=snap.size}catch(e){$("todayCount").textContent="—"}}
-async function deleteStaff(s){if(!confirm(`Delete ${s.name} (${s.id}) from the staff directory? This does not delete their attendance records.`))return;try{await deleteDoc(doc(db,"staff",s.id));await deleteDoc(doc(db,"staffDirectory",s.id));cachedStaff=cachedStaff.filter(x=>x.id!==s.id);renderStaff();await refreshStats()}catch(e){alert(friendly(e))}}
-async function startScanner(){if(!window.Html5Qrcode)return;try{if(!scanner)scanner=new Html5Qrcode("qr-reader");await scanner.start({facingMode:"environment"},{fps:10,qrbox:{width:230,height:230}},decoded=>{stopScanner();processScan(decoded)},()=>{});$("startScanBtn").disabled=true;$("stopScanBtn").disabled=false}catch(e){showMsg("scanMsg","Camera could not start. Allow camera access and use the HTTPS GitHub Pages address. You can enter the ID manually.",true)}}
-async function stopScanner(){try{if(scanner&&scanner.isScanning)await scanner.stop()}catch(e){}$("startScanBtn").disabled=false;$("stopScanBtn").disabled=true}
-$("startScanBtn").onclick=startScanner;$("stopScanBtn").onclick=stopScanner;$("manualScanBtn").onclick=()=>processScan($("manualId").value);
-async function processScan(raw){clearMsg("scanMsg");$("scanResult").classList.add("hidden");try{if(!currentUser||!currentUser.isAnonymous)throw new Error("Please open Device Login first.");const id=normalizeId(raw);if(!/^STG-(TEA|WOR)-\d{4,}$/.test(id))throw new Error("Invalid QR code. It must contain a staff ID such as STG-TEA-0001.");const dirSnap=await getDoc(doc(db,"staffDirectory",id));if(!dirSnap.exists())throw new Error("This staff ID is not registered. Please contact the Technical Admin.");const person=dirSnap.data(),date=sriDate(),time=sriTime(),refAtt=doc(db,"attendance",`${id}_${date}`);
- const result=await runTransaction(db,async tx=>{const snap=await tx.get(refAtt);if(!snap.exists()){tx.set(refAtt,{staffId:id,name:person.name,type:person.type,date,arrivalTime:time,arrivalAt:serverTimestamp(),departureTime:"",departureAt:null,updatedAt:serverTimestamp()});return "arrival"}const a=snap.data();if(a.departureTime)return "already-left";tx.update(refAtt,{departureTime:time,departureAt:serverTimestamp(),updatedAt:serverTimestamp()});return "departure"});
- const messages={arrival:`${person.name} has arrived successfully.\nArrival: ${time}\nDate: ${date}`,departure:`${person.name}'s departure has been saved successfully.\nDeparture: ${time}\nDate: ${date}`,"already-left":`${person.name} has already left the school today.\nNo new record was created.`};$("scanResult").innerHTML="";const h=document.createElement("h3");h.textContent=result==="arrival"?"Arrival saved":result==="departure"?"Departure saved":"Already left";const p=document.createElement("p");p.textContent=messages[result];$("scanResult").append(h,p);$("scanResult").classList.remove("hidden");$("manualId").value="";
- }catch(e){showMsg("scanMsg",friendly(e),true)}}
+}
+
+$("staffType").onchange=()=>{
+ const teacher=$("staffType").value==="teacher";
+ $("workerTypeWrap").classList.toggle("hidden",teacher);
+ $("workerType").required=!teacher;
+};
+$("staffType").dispatchEvent(new Event("change"));
+
+document.querySelectorAll("[data-tab]").forEach(b=>{
+ b.onclick=()=>{
+  document.querySelectorAll("[data-tab]").forEach(x=>{
+   x.classList.toggle("active",x===b);
+   x.classList.toggle("secondary",x!==b);
+  });
+  ["staffTab","addTab","attendanceTab"].forEach(id=>{
+   $(id).classList.toggle("hidden",id!==b.dataset.tab);
+  });
+ };
+});
+
+$("staffForm").onsubmit=async e=>{
+ e.preventDefault();
+ try{
+  if(!isAdmin())throw new Error("Technical Admin access is required.");
+  const type=$("staffType").value;
+  const name=$("staffName").value.trim();
+  const phone=$("staffPhone").value.trim();
+  const email=$("staffEmail").value.trim();
+  const address=$("staffAddress").value.trim();
+  const workerType=$("workerType").value.trim();
+
+  if(!name||!phone||!address)throw new Error("Complete all required fields.");
+  if(type==="worker"&&!workerType)throw new Error("Enter the worker type.");
+
+  const result=await runTransaction(db,async tx=>{
+   const counterRef=doc(db,"settings","staffCounters");
+   const counterSnap=await tx.get(counterRef);
+   const field=type==="teacher"?"teacher":"worker";
+   const next=(counterSnap.exists()?Number(counterSnap.data()[field]||0):0)+1;
+   const id=`STG-${type==="teacher"?"TEA":"WOR"}-${String(next).padStart(4,"0")}`;
+   const staffRef=doc(db,"staff",id);
+   const dirRef=doc(db,"staffDirectory",id);
+
+   tx.set(staffRef,{
+    id,type,name,phone,email,address,
+    workerType:type==="worker"?workerType:"",
+    photoURL:"",
+    createdAt:serverTimestamp(),
+    createdBy:currentUser.email
+   });
+   tx.set(dirRef,{id,type,name});
+   tx.set(counterRef,{[field]:next},{merge:true});
+   return id;
+  });
+
+  showMsg("addMsg",`Staff saved successfully.\nStaff ID: ${result}\nCreate a QR code containing only this ID.`,false,true);
+  $("staffForm").reset();
+  $("staffType").dispatchEvent(new Event("change"));
+  await refreshStaff();
+  await refreshStats();
+ }catch(err){showMsg("addMsg",friendly(err),true)}
+};
+
+async function refreshStaff(){
+ if(!isAdmin())return;
+ const snap=await getDocs(query(collection(db,"staff"),orderBy("id")));
+ cachedStaff=snap.docs.map(d=>d.data());
+ renderStaff();
+}
+function renderStaff(){
+ const term=$("staffSearch").value.toLowerCase();
+ const filter=$("staffFilter").value;
+ const arr=cachedStaff.filter(s=>
+  (filter==="all"||s.type===filter)&&
+  [s.id,s.name,s.phone].some(v=>String(v||"").toLowerCase().includes(term))
+ );
+ $("staffList").replaceChildren();
+ if(!arr.length){
+  $("staffList").textContent="No matching staff found.";
+  return;
+ }
+ arr.forEach(s=>{
+  const div=document.createElement("div");
+  div.className="person";
+  const img=document.createElement("img");
+  img.src="icon.png";
+  img.alt="";
+  const grow=document.createElement("div");
+  grow.className="grow";
+  const strong=document.createElement("strong");
+  strong.textContent=s.name;
+  const small=document.createElement("small");
+  small.textContent=`${s.id} · ${s.type==="teacher"?"Teacher":s.workerType||"Worker"}`;
+  const actions=document.createElement("div");
+  actions.className="actions";
+  const del=document.createElement("button");
+  del.className="danger";
+  del.textContent="Delete staff";
+  del.onclick=()=>deleteStaff(s);
+  actions.append(del);
+  grow.append(strong,small,actions);
+  div.append(img,grow);
+  $("staffList").append(div);
+ });
+}
+$("staffSearch").oninput=renderStaff;
+$("staffFilter").onchange=renderStaff;
+
+async function refreshStats(){
+ if(!isAdmin())return;
+ $("teacherCount").textContent=cachedStaff.filter(s=>s.type==="teacher").length;
+ $("workerCount").textContent=cachedStaff.filter(s=>s.type==="worker").length;
+ try{
+  const snap=await getDocs(query(collection(db,"attendance"),where("date","==",sriDate())));
+  $("todayCount").textContent=snap.size;
+ }catch(e){$("todayCount").textContent="—"}
+}
+async function deleteStaff(s){
+ if(!isAdmin())return;
+ if(!confirm(`Delete ${s.name} (${s.id}) from the staff directory? Attendance records will remain.`))return;
+ try{
+  await deleteDoc(doc(db,"staff",s.id));
+  await deleteDoc(doc(db,"staffDirectory",s.id));
+  cachedStaff=cachedStaff.filter(x=>x.id!==s.id);
+  renderStaff();
+  await refreshStats();
+ }catch(e){alert(friendly(e))}
+}
+
+async function startScanner(){
+ if(!window.Html5Qrcode){showMsg("scanMsg","QR scanner library did not load.",true);return}
+ try{
+  if(!scanner)scanner=new Html5Qrcode("qr-reader");
+  await scanner.start(
+   {facingMode:"environment"},
+   {fps:10,qrbox:{width:230,height:230}},
+   decoded=>{stopScanner();processScan(decoded)},
+   ()=>{}
+  );
+  $("startScanBtn").disabled=true;
+  $("stopScanBtn").disabled=false;
+ }catch(e){
+  showMsg("scanMsg","Camera could not start. Allow camera access and use the HTTPS GitHub Pages address. You can enter the ID manually.",true);
+ }
+}
+async function stopScanner(){
+ try{if(scanner&&scanner.isScanning)await scanner.stop()}catch(e){}
+ $("startScanBtn").disabled=false;
+ $("stopScanBtn").disabled=true;
+}
+$("startScanBtn").onclick=startScanner;
+$("stopScanBtn").onclick=stopScanner;
+$("manualScanBtn").onclick=()=>processScan($("manualId").value);
+
+async function processScan(raw){
+ clearMsg("scanMsg");
+ $("scanResult").classList.add("hidden");
+ try{
+  if(!currentUser||!currentUser.isAnonymous)throw new Error("Open Device Login first.");
+  const id=normalizeId(raw);
+  if(!/^STG-(TEA|WOR)-\d{4,}$/.test(id))throw new Error("Invalid staff ID. Example: STG-TEA-0001.");
+  const dirSnap=await getDoc(doc(db,"staffDirectory",id));
+  if(!dirSnap.exists())throw new Error("Staff ID is not registered.");
+  const person=dirSnap.data();
+  const date=sriDate();
+  const time=sriTime();
+  const attRef=doc(db,"attendance",`${id}_${date}`);
+
+  const result=await runTransaction(db,async tx=>{
+   const snap=await tx.get(attRef);
+   if(!snap.exists()){
+    tx.set(attRef,{
+     staffId:id,name:person.name,type:person.type,date,
+     arrivalTime:time,arrivalAt:serverTimestamp(),
+     departureTime:"",departureAt:null,updatedAt:serverTimestamp()
+    });
+    return "arrival";
+   }
+   const a=snap.data();
+   if(a.departureTime)return "already-left";
+   tx.update(attRef,{
+    departureTime:time,departureAt:serverTimestamp(),updatedAt:serverTimestamp()
+   });
+   return "departure";
+  });
+
+  const messages={
+   arrival:`${person.name} has arrived successfully.\nArrival: ${time}\nDate: ${date}`,
+   departure:`${person.name}'s departure has been saved.\nDeparture: ${time}\nDate: ${date}`,
+   "already-left":`${person.name} has already left today. No new record was created.`
+  };
+  $("scanResult").replaceChildren();
+  const h=document.createElement("h3");
+  h.textContent=result==="arrival"?"Arrival saved":result==="departure"?"Departure saved":"Already left";
+  const p=document.createElement("p");
+  p.textContent=messages[result];
+  $("scanResult").append(h,p);
+  $("scanResult").classList.remove("hidden");
+  $("manualId").value="";
+ }catch(e){showMsg("scanMsg",friendly(e),true)}
+}
+
 $("loadAttendanceBtn").onclick=loadAttendance;
-async function loadAttendance(){if(!isAdmin())return;try{const snap=await getDocs(query(collection(db,"attendance"),orderBy("date","desc")));lastRows=snap.docs.map(d=>({docId:d.id,...d.data()})).filter(r=>(!$("fromDate").value||r.date>=$("fromDate").value)&&(!$("toDate").value||r.date<=$("toDate").value));renderAttendance()}catch(e){showMsg("loginMsg",friendly(e),true)}}
-function renderAttendance(){const root=$("attendanceList");root.innerHTML="";if(!lastRows.length){root.textContent="No attendance records found for this date range.";return}const table=document.createElement("table");table.innerHTML="<thead><tr><th>Staff ID</th><th>Name</th><th>Date</th><th>Arrival</th><th>Departure</th><th>Action</th></tr></thead>";const body=document.createElement("tbody");lastRows.forEach(r=>{const tr=document.createElement("tr");[r.staffId,r.name,r.date,r.arrivalTime||"—",r.departureTime||"Not recorded"].forEach(v=>{const td=document.createElement("td");td.textContent=v;tr.append(td)});const td=document.createElement("td"),b=document.createElement("button");b.className="danger";b.textContent="Delete";b.onclick=()=>deleteAttendance(r);td.append(b);tr.append(td);body.append(tr)});table.append(body);root.append(table)}
-async function deleteAttendance(r){if(!confirm(`Delete attendance for ${r.name} on ${r.date}? This cannot be undone.`))return;try{await deleteDoc(doc(db,"attendance",r.docId));lastRows=lastRows.filter(x=>x.docId!==r.docId);renderAttendance();await refreshStats()}catch(e){alert(friendly(e))}}
-$("exportAllBtn").onclick=()=>{if(!lastRows.length)return alert("Load attendance records first.");const csv=[["Staff ID","Name","Category","Date","Arrival","Departure"],...lastRows.map(r=>[r.staffId,r.name,r.type,r.date,r.arrivalTime||"",r.departureTime||""])].map(row=>row.map(v=>`"${String(v??"").replace(/"/g,'""')}"`).join(",")).join("\r\n");downloadBlob(csv,"stg-attendance.csv","text/csv;charset=utf-8")};
-async function getPersonRows(s){const snap=await getDocs(query(collection(db,"attendance"),where("staffId","==",s.id),orderBy("date","asc")));return snap.docs.map(d=>d.data())}
-async function makePersonPDF(s){try{const rows=await getPersonRows(s),{jsPDF}=window.jspdf, pdf=new jsPDF();pdf.setTextColor(23,109,115);pdf.setFontSize(15);pdf.text("ST. THERESA'S GEMS INTERNATIONAL PRESCHOOL",105,17,{align:"center"});pdf.setFontSize(12);pdf.text("STAFF ATTENDANCE REPORT",105,25,{align:"center"});let y=36;if(s.photoURL){try{const data=await imageToDataURL(s.photoURL);pdf.addImage(data,"JPEG",14,y,25,25);y+=2}catch(e){}}pdf.setTextColor(30);pdf.setFontSize(10);const x=s.photoURL?45:14;pdf.text(`Name: ${s.name}`,x,y+5);pdf.text(`Staff ID: ${s.id}`,x,y+11);pdf.text(`Category: ${s.type==="teacher"?"Teacher":s.workerType||"Worker"}`,x,y+17);pdf.text(`Phone: ${s.phone||"—"}`,x,y+23);pdf.text(`Email: ${s.email||"—"}`,x,y+29);pdf.text(`Address: ${s.address||"—"}`,14,y+38,{maxWidth:180});let ty=y+48;pdf.setFillColor(23,109,115);pdf.setTextColor(255);pdf.rect(14,ty,182,8,"F");pdf.setFontSize(9);pdf.text("DATE",17,ty+5.5);pdf.text("ARRIVAL TIME",67,ty+5.5);pdf.text("DEPARTURE TIME",123,ty+5.5);pdf.setTextColor(30);ty+=8;pdf.setFontSize(9);if(!rows.length){pdf.text("No attendance records found.",14,ty+8)}rows.forEach(r=>{if(ty>275){pdf.addPage();ty=20}pdf.line(14,ty+7,196,ty+7);pdf.text(String(r.date||"—"),17,ty+5);pdf.text(String(r.arrivalTime||"—"),67,ty+5);pdf.text(String(r.departureTime||"Not recorded"),123,ty+5);ty+=8});pdf.save(`${s.id}-attendance.pdf`)}catch(e){alert(friendly(e))}}
-async function imageToDataURL(url){const res=await fetch(url);const blob=await res.blob();return await new Promise((resolve,reject)=>{const r=new FileReader();r.onload=()=>resolve(r.result);r.onerror=reject;r.readAsDataURL(blob)})}
-function downloadBlob(text,name,type){const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([text],{type}));a.download=name;a.click();URL.revokeObjectURL(a.href)}
-function friendly(e){if(e.code==="auth/invalid-credential"||e.code==="auth/wrong-password")return"Incorrect email or password.";if(e.code==="permission-denied"||e.code==="firestore/permission-denied")return"Firebase denied this action. Check your Firestore rules and admin email configuration.";if(e.code==="auth/operation-not-allowed")return"Enable this sign-in method in Firebase Authentication.";return e.message||"Something went wrong."}
-if("serviceWorker" in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(()=>{}));
+async function loadAttendance(){
+ if(!isAdmin())return;
+ try{
+  const snap=await getDocs(query(collection(db,"attendance"),orderBy("date","desc")));
+  lastRows=snap.docs.map(d=>({docId:d.id,...d.data()})).filter(r=>
+   (!$("fromDate").value||r.date>=$("fromDate").value)&&
+   (!$("toDate").value||r.date<=$("toDate").value)
+  );
+  renderAttendance();
+ }catch(e){showMsg("loginMsg",friendly(e),true)}
+}
+function renderAttendance(){
+ const root=$("attendanceList");
+ root.replaceChildren();
+ if(!lastRows.length){root.textContent="No attendance records found for this date range.";return}
+ const table=document.createElement("table");
+ table.innerHTML="<thead><tr><th>Staff ID</th><th>Name</th><th>Date</th><th>Arrival</th><th>Departure</th><th>Action</th></tr></thead>";
+ const body=document.createElement("tbody");
+ lastRows.forEach(r=>{
+  const tr=document.createElement("tr");
+  [r.staffId,r.name,r.date,r.arrivalTime||"—",r.departureTime||"Not recorded"].forEach(v=>{
+   const td=document.createElement("td");td.textContent=v;tr.append(td);
+  });
+  const td=document.createElement("td");
+  const b=document.createElement("button");
+  b.className="danger";b.textContent="Delete";
+  b.onclick=()=>deleteAttendance(r);
+  td.append(b);tr.append(td);body.append(tr);
+ });
+ table.append(body);root.append(table);
+}
+async function deleteAttendance(r){
+ if(!isAdmin())return;
+ if(!confirm(`Delete attendance for ${r.name} on ${r.date}?`))return;
+ try{
+  await deleteDoc(doc(db,"attendance",r.docId));
+  lastRows=lastRows.filter(x=>x.docId!==r.docId);
+  renderAttendance();
+  await refreshStats();
+ }catch(e){alert(friendly(e))}
+}
+$("exportAllBtn").onclick=()=>{
+ if(!lastRows.length)return alert("Load attendance records first.");
+ const csv=[["Staff ID","Name","Category","Date","Arrival","Departure"],
+ ...lastRows.map(r=>[r.staffId,r.name,r.type,r.date,r.arrivalTime||"",r.departureTime||""])]
+ .map(row=>row.map(v=>`"${String(v??"").replace(/"/g,'""')}"`).join(",")).join("\r\n");
+ downloadBlob(csv,"stg-attendance.csv","text/csv;charset=utf-8");
+};
+function downloadBlob(text,name,type){
+ const a=document.createElement("a");
+ const url=URL.createObjectURL(new Blob([text],{type}));
+ a.href=url;a.download=name;a.click();
+ setTimeout(()=>URL.revokeObjectURL(url),1000);
+}
+
+if("serviceWorker" in navigator){
+ window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(()=>{}));
+}
 </script>
-</body></html>
+</body>
+</html>
