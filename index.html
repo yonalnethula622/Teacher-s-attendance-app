@@ -71,7 +71,7 @@ const firebaseConfig = {
 };
 /* Admin email is also enforced in Firestore rules. Update both places. */
 const ADMIN_EMAIL = "st.theresapreschool2010@gmail.com ";
-const CONFIGURED = !Object.values(firebaseConfig).some(v => String(v).startsWith("YOUR_")) && !ADMIN_EMAIL.startsWith("YOUR_");
+const CONFIGURED = !Object.values(firebaseConfig).some(v => String(v).startsWith("YOUR_")) && !ADMIN_EMAIL.startsWith("st.theresapreschool2010@gmail.com");
 const $ = id => document.getElementById(id);
 const views = ["loginView","deviceView","adminView"];
 let app, auth, db, storage, scanner, currentUser=null, currentMode="", cachedStaff=[], lastRows=[], photoData=null;
