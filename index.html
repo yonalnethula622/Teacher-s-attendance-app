@@ -265,15 +265,28 @@ $("deviceLoginBtn").onclick=async()=>{
  }catch(e){showMsg("loginMsg",friendly(e),true)}
 };
 
-$("adminLoginBtn").onclick=async()=>{
- try{
-  await requireConfig();
-  const email=$("adminEmail").value.trim();
-  if(email.toLowerCase()!==ADMIN_EMAIL.toLowerCase()){
-   throw new Error("This email is not the configured Technical Admin.");
+
+$("adminLoginBtn").onclick = async () => {
+  const email = $("adminEmail").value.trim();
+  const password = $("adminPassword").value;
+
+  showMsg("loginMsg", "Signing in...");
+
+  try {
+    await requireConfig();
+
+    if (!email || !password) {
+      throw new Error("Please enter both your email and password.");
+    }
+
+    if (email.toLowerCase() !== ADMIN_EMAIL.trim().toLowerCase()) {
+      throw new Error("This email is not the configured Technical Admin.");
+    }
+
+    await signInWithEmailAndPassword(auth, email, password);
+  } catch (e) {
+    showMsg("loginMsg", `${e.code ? e.code + ": " : ""}${friendly(e)}`, true);
   }
-  await signInWithEmailAndPassword(auth,email,$("adminPassword").value);
- }catch(e){showMsg("loginMsg",friendly(e),true)}
 };
 
 $("deviceLogoutBtn").onclick=async()=>{
